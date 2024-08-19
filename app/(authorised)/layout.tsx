@@ -6,7 +6,7 @@ interface Props {
 }
 
 const layout = (props: Props) => {
-    return <div>
+    return <div className={styles.wrapper}>
         {props.children}
     </div>;
 };
