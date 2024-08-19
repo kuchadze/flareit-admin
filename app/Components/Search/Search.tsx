@@ -55,10 +55,8 @@ const Search = () => {
         const sortData = data.sort((a, b) => {
             if (a.type === 'album' && b.type !== 'album') {
                 return -1;
-            } else if (a.type !== 'album' && b.type === 'album') {
-                return 1;
             } else {
-                return 0;
+                return 1;
             }
         });
         return (
