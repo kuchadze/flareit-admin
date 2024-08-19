@@ -1,0 +1,68 @@
+@import "../../styles/colors.scss";
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    background-color: $PrimaryBlackTone1;
+    padding: 12px 24px;
+    align-items: center;
+    width: 100%;
+}
+
+.headerContainerBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: sticky;
+    top: 0;
+}
+
+.headerSearchContainer {
+    display: flex;
+    justify-content: space-between;
+    max-width: 732px;
+    width: 100%;
+    align-items: center;
+}
+
+.searchContainer {
+    position: relative;
+    max-width: 434px;
+    width: 100%;
+    height: 40px;
+}
+
+@media screen and (min-width:600px) and (max-width:1023px) {
+    .headerLogOut {
+        display: none;
+    }
+    .NavMobile {
+        display: none;
+    }
+    .logo {
+        display: block;
+    } 
+}
+
+@media screen and (max-width:599px) {
+    .headerContainerBox {
+        display: none;
+    }
+}
+
+@media screen and (min-width:1024px) {
+    .headerNavigation {
+        display: none;
+    }
+
+    .logo {
+        display: none;
+    } 
+
+    .NavDesktopCont {
+        display: none;
+    }
+    .NavDesktop {
+        display: none;
+    }
+}
