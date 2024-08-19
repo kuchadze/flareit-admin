@@ -1,0 +1,3 @@
+interface luka {
+    github : false 
+}
