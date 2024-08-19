@@ -1,7 +1,14 @@
+import { ReactNode } from 'react';
 import styles from './layout.module.scss';
 
-const layout = () => {
-    return <div></div>;
+interface Props {
+    children: ReactNode;
+}
+
+const layout = (props: Props) => {
+    return <div>
+        {props.children}
+    </div>;
 };
 
 export default layout;
