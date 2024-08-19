@@ -1,0 +1,49 @@
+@import '../../../styles/colors.scss';
+
+.logOutBackground {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(41, 41, 41, 0.47);
+    position: fixed;
+    transition: transform 0.3 ease-in;
+    z-index: 999;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modalCont {
+    margin-top: 64px;
+    margin-right: 24px;
+}
+
+.logOutModal {
+    max-width: 295px;
+    width: 100%;
+    height: 95px;
+    padding: 16px;
+    background-color: #000000;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-radius: 8px;
+}
+
+.color {
+    color: $PrimaryWhite;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.logOut {
+    padding: 4px 0px 4px 0px;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.19);
+    display: flex;
+    align-content: center;
+    gap: 4px;
+}
