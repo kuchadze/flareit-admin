@@ -81,13 +81,6 @@ const Navigation = () => {
                             }
                         />
                     ))}
-                    {/* <div className={styles.logOutTablet}>
-                        <LogOutTablet
-                            onClick={logOut}
-                            image={'Image/LogOutIcon.svg'}
-                            title={'Log Out'}
-                        />
-                    </div> */}
                 </div>
             </div>
         </div>
