@@ -1,9 +1,8 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 import styles from './Search.module.scss';
 import SearchList from './SearchList/SearchList';
-
 
 interface Item {
     id: number;
@@ -11,7 +10,7 @@ interface Item {
     search_count: number;
     last_searched: string;
     icon: string;
-    type:  'album' | 'artist';
+    type: 'album' | 'artist';
 }
 
 const Search = () => {
@@ -52,15 +51,19 @@ const Search = () => {
 
     const [search, setSearch] = useState('');
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value);
-    };
-
-    const renderItemsByType = (type: string) => {
-        const filteredData = data.filter((item) => item.type === type);
+    const renderItemsByType = () => {
+        const sortData = data.sort((a, b) => {
+            if (a.type === 'album' && b.type !== 'album') {
+                return -1;
+            } else if (a.type !== 'album' && b.type === 'album') {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
         return (
             <div className={styles.dataContainer}>
-                {filteredData.map((item) => (
+                {sortData.map((item) => (
                     <SearchList key={item.id} item={item} />
                 ))}
             </div>
@@ -82,15 +85,16 @@ const Search = () => {
                     <input
                         type="text"
                         className={styles.input}
-                        onChange={onChange}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setSearch(e.target.value);
+                        }}
                         value={search}
                         placeholder="Search"
                     />
                 </div>
                 {search && (
                     <div className={styles.searchMapCont}>
-                        {renderItemsByType('album')}
-                        {renderItemsByType('artist')}
+                        {renderItemsByType()}
                     </div>
                 )}
             </div>
