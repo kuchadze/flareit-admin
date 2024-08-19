@@ -12,11 +12,13 @@ interface Props {
 const LogOutWeb = (props: Props) => {
     const [profileWeb, setProfileWeb] = useState(false);
 
-    const onClick = () => {
-        setProfileWeb(!profileWeb);
-    };
     return (
-        <div className={styles.profile} onClick={onClick}>
+        <div
+            className={styles.profile}
+            onClick={() => {
+                setProfileWeb(!profileWeb);
+            }}
+        >
             <Image
                 className={styles.image}
                 src={props.src}

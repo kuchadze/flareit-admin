@@ -33,9 +33,7 @@ const LogOutModal = (props: Props) => {
                         </div>
                     </div>
                 </div>
-            ) : (
-                ''
-            )}
+            ) : null}
         </>
     );
 };
