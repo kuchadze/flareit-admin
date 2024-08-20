@@ -1,0 +1,36 @@
+.btnCommon {
+    color: #e2e2e3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    height: 48px;
+    width: 100%;
+}
+
+.primary {
+    background-color: #5e4be2;
+}
+
+.secondary {
+    background-color: rgba(105, 109, 140, 0.2);
+}
+
+.secondary:hover {
+    background: rgba(105, 109, 140, 0.44);
+}
+
+.primary:hover {
+    background: #5141bf;
+}
+
+.large {
+    padding: 21px 205px;
+    font-size: 24px;
+    height: 71px;
+}
