@@ -1,4 +1,29 @@
 .wrapper {
     height: 100%;
+    width: 100%;
+    // display: flex;
+}
+
+.navAndHeader {
+    height: 100vh;
+}
+
+.container {
     display: flex;
+    width: 100%;
+}
+
+.header {
+    width: 100%;
+}
+
+.children {
+    background-color: #121212;
+    overflow: auto;
+    height: 100vh;
+    padding: 24px 24px 0px 18px;
+}
+
+.children::-webkit-scrollbar {
+    display: none;
 }

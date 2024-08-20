@@ -34,22 +34,9 @@ const Navigation = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
     const pathname = usePathname();
     return (
         <div className={styles.mainNavigation}>
-            <div className={styles.lineContainer}>
-                <div className={styles.line} onClick={toggleMenu}>
-                    <Image
-                        width={40}
-                        height={40}
-                        src="/Image/Line.svg"
-                        alt="Menu"
-                    />
-                </div>
-            </div>
             <div
                 className={`${styles.navigationContainer}  ${
                     isOpen ? styles.open : ''
@@ -59,15 +46,6 @@ const Navigation = () => {
                     <Logo />
                 </div>
                 <div className={styles.navigation}>
-                    <div className={styles.navigationLine}>
-                        <Image
-                            width={40}
-                            height={40}
-                            onClick={toggleMenu}
-                            src="/Image/Line.svg"
-                            alt="Menu"
-                        />
-                    </div>
                     {data.map((item) => (
                         <NavigationItem
                             key={item.key}
