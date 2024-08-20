@@ -32,7 +32,7 @@ const Navigation = () => {
         },
     ];
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen] = useState(false);
 
     const pathname = usePathname();
     return (
