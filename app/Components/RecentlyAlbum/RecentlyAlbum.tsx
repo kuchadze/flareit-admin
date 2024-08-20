@@ -69,6 +69,7 @@ const RecentlyAlbum = () => {
                     year={item.year}
                     artistName={item.artistName}
                     id={item.id}
+                    pagePathName={''}
                 />
             ))}
         </>

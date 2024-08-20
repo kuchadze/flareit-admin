@@ -7,7 +7,7 @@ interface Props {
     year: string;
     artistName: string;
     id: number;
-    pagePathName?: string;
+    pagePathName: string;
 }
 
 const AlbumCard = (props: Props) => {
