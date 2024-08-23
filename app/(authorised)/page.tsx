@@ -10,22 +10,12 @@ import AddArtist from '../Components/AddArtist/AddArtist';
 
 export default function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const addArtistRef = useRef<{ submitForm: () => void }>(null);
-
-    const handleModalDone = () => {
-        if (addArtistRef.current) {
-            addArtistRef.current.submitForm();
-        }
-    };
 
     return (
         <main className={styles.main}>
             <div className={styles.sectionHeader}>
                 <p className={styles.musicContainer}>Recently added music</p>
-                <div
-                    className={styles.hitsContainer}
-                    onClick={() => setIsModalOpen(true)}
-                >
+                <div className={styles.hitsContainer}>
                     <RecentlyMusic />
                 </div>
             </div>
@@ -41,22 +31,6 @@ export default function Home() {
                     <RecentlyAlbum />
                 </div>
             </div>
-            {isModalOpen && (
-                <Modal
-                    isOpen={isModalOpen}
-                    setIsModalOpen={setIsModalOpen}
-                    children={
-                        <AddArtist
-                            ref={addArtistRef}
-                            onDone={handleModalDone}
-                        />
-                    }
-                    hasFooter={true}
-                    cancelText={'Cancel'}
-                    confirmText={'Done'}
-                    onDone={handleModalDone}
-                />
-            )}
         </main>
     );
 }
