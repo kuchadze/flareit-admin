@@ -9,8 +9,6 @@ import styles from './page.module.scss';
 import AddArtist from '../Components/AddArtist/AddArtist';
 
 export default function Home() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     return (
         <main className={styles.main}>
             <div className={styles.sectionHeader}>
