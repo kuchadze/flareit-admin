@@ -7,7 +7,7 @@ interface Props {
     register: UseFormRegisterReturn;
 }
 
-const Input: React.FC<Props> = (props) => {
+const Input = (props: Props) => {
     return (
         <textarea
             className={

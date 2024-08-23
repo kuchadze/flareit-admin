@@ -3,17 +3,10 @@ import Input from '../Input/Input';
 import styles from './AddArtist.module.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
+import { FormValues } from '@/app/interfaces/interface';
 
 interface AddArtistProps {
     onDone?: () => void;
-}
-
-interface FormValues {
-    artistName: string;
-    lastName: string;
-    releaseDate: number;
-    biography: string;
-    coverImgUrl: FileList;
 }
 
 const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
@@ -46,7 +39,7 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                 );
                 console.log('Response:', response.data);
             } catch (error) {
-                console.log(error);
+                alert('error');
             }
 
             if (onDone) {
