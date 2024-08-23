@@ -1,3 +1,4 @@
+import DeleteBox from '../DeleteBox/DeleteBox';
 import styles from './MusicCard.module.scss';
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
     teamName: string;
     id: number;
     index: number;
+    delete: boolean;
 }
 
 const MusicCard = (props: Props) => {
@@ -25,6 +27,9 @@ const MusicCard = (props: Props) => {
                         {props.teamName}
                     </span>
                 </div>
+            </div>
+            <div>
+                <DeleteBox id={0} delete={props.delete} />
             </div>
         </div>
     );

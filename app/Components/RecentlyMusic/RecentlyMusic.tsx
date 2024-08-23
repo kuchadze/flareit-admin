@@ -55,6 +55,7 @@ const RecentlyMusic = () => {
                     teamName={item.temeName}
                     id={item.id}
                     index={index}
+                    delete={true}
                 />
             ))}
         </>
