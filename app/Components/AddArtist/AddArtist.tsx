@@ -1,100 +1,3 @@
-// import React from 'react';
-// import Input from '../Input/Input';
-// import styles from './AddArtist.module.scss';
-// import { useForm } from 'react-hook-form';
-
-// const AddArtist = () => {
-//     const {
-//         handleSubmit,
-//         register,
-//         formState: { errors },
-//     } = useForm();
-
-//     const onRegister = (values: any) => {
-//         console.log('values', values);
-//     };
-
-//     // console.log(errors);
-
-//     return (
-//         <div className={styles.central}>
-//             <form onSubmit={handleSubmit(onRegister)}>
-//                 <div className={styles.container}>
-//                     <div className={styles.inputGroup}>
-//                         <p className={styles.color}>Name</p>
-//                         <Input
-//                             register={{
-//                                 ...register('name', {
-//                                     required: true,
-//                                     minLength: 1,
-//                                 }),
-//                             }}
-//                             placeholder="Artist Name"
-//                             type={''}
-//                         />
-//                     </div>
-//                     <div className={styles.inputGroup}>
-//                         <p className={styles.color}>Last Name</p>
-//                         <Input
-//                             register={{
-//                                 ...register('lastname', {
-//                                     required: true,
-//                                     minLength: 1,
-//                                 }),
-//                             }}
-//                             placeholder="Artist Last Name"
-//                             type={''}
-//                         />
-//                     </div>
-//                 </div>
-//                 <div className={styles.inputGroup}>
-//                     <p className={styles.color}>Year</p>
-//                     <Input
-//                         register={{
-//                             ...register('year', {
-//                                 required: true,
-//                                 minLength: 1,
-//                             }),
-//                         }}
-//                         placeholder="Year"
-//                         type={''}
-//                     />
-//                 </div>
-//                 <div className={styles.inputGroup}>
-//                     <p className={styles.color}>Biography</p>
-//                     <Input
-//                         register={{
-//                             ...register('biography', {
-//                                 required: true,
-//                                 minLength: 1,
-//                             }),
-//                         }}
-//                         placeholder="Add Biography"
-//                         type={''}
-//                     />
-//                 </div>
-//                 <div className={styles.fileInputWrapper}>
-//                     <input
-//                         id="fileInput"
-//                         type="file"
-//                         className={styles.fileInput}
-//                         {...register('file', {
-//                             required: true,
-//                         })}
-//                     />
-//                     <label htmlFor="fileInput" className={styles.customButton}>
-//                         <img src="/images/Image.svg" alt="Upload icon" />
-//                         {/* {fileName || 'Upload artist photo'} */}
-//                     </label>
-//                 </div>
-//                 <input type="submit" value={'register'} />
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default AddArtist;
-
 import React, { forwardRef, useImperativeHandle } from 'react';
 import Input from '../Input/Input';
 import styles from './AddArtist.module.scss';
@@ -131,15 +34,6 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
             if (values.coverImgUrl.length > 0) {
                 formData.append('picture', values.coverImgUrl[0]);
             }
-
-            formData.forEach((value, key) => {
-                if (value instanceof File) {
-                    console.log(`${key}: ${value.name}`);
-                } else {
-                    console.log(`${key}: ${value}`);
-                }
-            });
-
             try {
                 const response = await axios.post(
                     'https://enigma-wtuc.onrender.com/authors',
@@ -152,16 +46,14 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                 );
                 console.log('Response:', response.data);
             } catch (error) {
-                console.error(
-                    'Error:',
-                    error.response ? error.response.data : error.message,
-                );
+                console.log(error);
             }
 
             if (onDone) {
                 onDone();
             }
         };
+
         useImperativeHandle(ref, () => ({
             submitForm: handleSubmit(onRegister),
         }));
@@ -173,65 +65,44 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         <div className={styles.inputGroup}>
                             <p className={styles.color}>Name</p>
                             <Input
-                                register={{
-                                    ...register('artistName', {
-                                        required: true,
-                                        minLength: 1,
-                                    }),
-                                }}
+                                register={register('artistName', {
+                                    required: true,
+                                    minLength: 1,
+                                })}
                                 placeholder="Artist Name"
-                                type="text"
                             />
-                            {errors.artistName && (
-                                <p className={styles.error}>Name is required</p>
-                            )}
                         </div>
                         <div className={styles.inputGroup}>
                             <p className={styles.color}>Last Name</p>
                             <Input
-                                register={{
-                                    ...register('lastName', {
-                                        required: true,
-                                        minLength: 1,
-                                    }),
-                                }}
+                                register={register('lastName', {
+                                    required: true,
+                                    minLength: 1,
+                                })}
                                 placeholder="Artist Last Name"
-                                type="text"
                             />
-                            {errors.lastName && (
-                                <p className={styles.error}>
-                                    Last Name is required
-                                </p>
-                            )}
                         </div>
                     </div>
                     <div className={styles.inputGroup}>
                         <p className={styles.color}>Year</p>
-                        <Input
-                            register={{
-                                ...register('releaseDate', {
-                                    required: true,
-                                    min: 1,
-                                }),
-                            }}
+                        <input
+                            className={styles.input}
+                            {...register('releaseDate', {
+                                required: true,
+                                minLength: 1,
+                            })}
                             placeholder="Year"
                             type="number"
                         />
-                        {errors.releaseDate && (
-                            <p className={styles.error}>Year is required</p>
-                        )}
                     </div>
                     <div className={styles.inputGroup}>
                         <p className={styles.color}>Biography</p>
                         <Input
-                            register={{
-                                ...register('biography', {
-                                    required: true,
-                                    minLength: 1,
-                                }),
-                            }}
+                            register={register('biography', {
+                                required: true,
+                                minLength: 1,
+                            })}
                             placeholder="Add Biography"
-                            type="text"
                         />
                         {errors.biography && (
                             <p className={styles.error}>

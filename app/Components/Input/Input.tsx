@@ -1,22 +1,21 @@
 import React from 'react';
-import style from './Input.module.scss';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import styles from './Input.module.scss';
 
 interface Props {
     placeholder: string;
-    register: any;
-    type: string | number;
+    register: UseFormRegisterReturn;
 }
 
 const Input: React.FC<Props> = (props) => {
     return (
-        <input
+        <textarea
             className={
                 props.placeholder === 'Add Biography'
-                    ? style.biography
-                    : style.input
+                    ? styles.biography
+                    : styles.input
             }
             {...props.register}
-            type={props.type}
             placeholder={props.placeholder}
         />
     );
