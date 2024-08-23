@@ -118,8 +118,7 @@ const Albums = () => {
     ];
     return (
         <div className={styles.container}>
-
-                <p className={styles.albums}>Albums</p>
+            <p className={styles.albums}>Albums</p>
             <div className={styles.albumCard}>
                 {data.map((item) => (
                     <AlbumCard

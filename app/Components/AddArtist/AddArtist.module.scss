@@ -1,0 +1,108 @@
+.central {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.inputGroup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.color {
+    color: #fff;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.addPhoto {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 109px;
+    background-color: #0d1116;
+    border: 1px #232934;
+    border-radius: var(--borderRadius, 6px);
+}
+
+.file {
+    outline: none;
+    background-color: #0d1116;
+    border: none;
+    display: none;
+}
+
+.fileInputWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+
+    border-radius: var(--borderRadius, 6px);
+    border: 1px #232934;
+    background: #0d1116;
+}
+
+.fileInput {
+    display: none;
+}
+
+.customButton {
+    color: #fff;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+}
+
+.biography {
+    position: relative;
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #232934;
+    background-color: #000;
+    padding: 12px;
+    outline: none;
+    color: #7b819d;
+    box-sizing: border-box;
+}
+
+.input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
