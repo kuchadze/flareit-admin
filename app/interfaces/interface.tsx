@@ -4,4 +4,5 @@ export interface FormValues {
     releaseDate: number;
     biography: string;
     coverImgUrl: FileList;
+    title: string
 }

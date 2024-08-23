@@ -6,7 +6,6 @@ import RecentlyAlbum from '../Components/RecentlyAlbum/RecentlyAlbum';
 import RecentlyArtist from '../Components/RecentlyArtist/RecentlyArtist';
 import RecentlyMusic from '../Components/RecentlyMusic/RecentlyMusic';
 import styles from './page.module.scss';
-import AddArtist from '../Components/AddArtist/AddArtist';
 
 export default function Home() {
     return (
