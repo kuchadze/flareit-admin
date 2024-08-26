@@ -3,7 +3,7 @@ export interface FormValues {
     lastName: string;
     releaseDate: number;
     biography: string;
-    coverImgUrl: FileList;
+    coverImgUrl: FileList; // Should be FileList for file inputs
     title: string;
-    audio: string;
+    audio: FileList; // Should be FileList for file inputs
 }

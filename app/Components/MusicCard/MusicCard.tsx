@@ -21,7 +21,7 @@ const MusicCard = (props: Props) => {
             await axios.delete(`https://enigma-wtuc.onrender.com/musics/${props.id}`);
             setIsDeleted(true);
         } catch (error) {
-            console.error(error);
+            alert(error)
         } finally {
             setShowModal(false);
         }

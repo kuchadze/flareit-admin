@@ -41,7 +41,7 @@ const OneAlbumsById = () => {
                 setMusic(result.data);
             })
             .catch((error) => {
-                console.error('Error fetching music data:', error);
+                alert(error);
             });
     }, []);
 
@@ -105,7 +105,7 @@ const OneAlbumsById = () => {
                     hasFooter={true}
                     title="Add Music"
                     onDone={handleModalDone}
-                    cancelText={'cancle'}
+                    cancelText={'cancel'}
                     confirmText={'done'}
                 />
             )}

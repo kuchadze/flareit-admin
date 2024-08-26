@@ -36,7 +36,6 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         },
                     },
                 );
-                console.log('Response:', response.data);
             } catch (error) {
                 alert('error');
             }
