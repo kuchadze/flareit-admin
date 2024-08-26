@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import RecoilWrapper from './Components/RecoilWrapper/RecoilWrapper';
+import '@/app/styles/ant.table.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
