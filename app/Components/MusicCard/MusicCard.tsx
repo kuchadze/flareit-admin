@@ -18,10 +18,12 @@ const MusicCard = (props: Props) => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://enigma-wtuc.onrender.com/musics/${props.id}`);
+            await axios.delete(
+                `https://enigma-wtuc.onrender.com/musics/${props.id}`,
+            );
             setIsDeleted(true);
         } catch (error) {
-            alert(error)
+            alert(error);
         } finally {
             setShowModal(false);
         }
@@ -46,11 +48,11 @@ const MusicCard = (props: Props) => {
                     </span>
                 </div>
             </div>
-            <div onClick={() => setShowModal(true)}>
+            <div onClick={() => setShowModal(!showModal)}>
                 <DeleteBox
                     id={props.id}
                     delete={props.delete}
-                    setRemove={() => setShowModal(false)}
+                    setRemove={() => setShowModal(showModal)}
                     remove={showModal}
                     onConfirm={handleDelete}
                 />
@@ -60,4 +62,3 @@ const MusicCard = (props: Props) => {
 };
 
 export default MusicCard;
-
