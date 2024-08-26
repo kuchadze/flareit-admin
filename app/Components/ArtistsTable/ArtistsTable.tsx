@@ -45,23 +45,23 @@ const ArtistsTable = () => {
     const data = [
         {
             key: '1',
-            name: 'John Brown',
-            year: 32,
-            songs: 'Song 1',
+            name: 'imany',
+            year: 1979,
+            songs: 11,
             'added date': '2024-08-01',
         },
         {
             key: '2',
-            name: 'Jim Green',
-            year: 42,
-            songs: 'Song 2',
+            name: 'coldplay',
+            year: 1997,
+            songs: 9,
             'added date': '2024-08-02',
         },
         {
             key: '3',
-            name: 'Joe Black',
-            year: 32,
-            songs: 'Song 3',
+            name: 'the beatles',
+            year: 1960,
+            songs: 3,
             'added date': '2024-08-03',
         },
     ];
