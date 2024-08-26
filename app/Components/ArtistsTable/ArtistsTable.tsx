@@ -37,7 +37,6 @@ const ArtistsTable = () => {
             render: () => (
                 <div className={styles.buttons}>
                     <IconButton src={'/icons/iconButton/addAlbum.svg'} />
-                    <IconButton src={'/icons/iconButton/deleteButton.svg'} />
                 </div>
             ),
         },
