@@ -1,12 +1,10 @@
-'use client'
-import Artist from "@/app/Components/Artists/Artists"
-import styles from "./page.module.scss"
+import Artist from '@/app/Components/Artists/Artists';
 
 const Albums = () => {
     return (
         <>
-            <Artist/>
+            <Artist />
         </>
-    )
-}
-export default Albums
+    );
+};
+export default Albums;
