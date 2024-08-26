@@ -11,16 +11,9 @@
     cursor: pointer;
 }
 
-@media screen and (max-width: 599px) {
-    .musicCard:hover .musicCardHoverPhoto {
-        visibility: hidden;
-    }
-}
-
-@media screen and (min-width: 600px) and (max-width: 1024px) {
-    .musicCard:hover .musicCardHoverPhoto {
-        visibility: hidden;
-    }
+.musicCardPhoto {
+    width: 42px;
+    height: 42px;
 }
 
 .musicCard:hover {
@@ -31,24 +24,6 @@
     display: flex;
     align-items: center;
     gap: 14px;
-}
-
-.musicCardhover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.musicCardPhoto {
-    position: relative;
-    width: 100%;
-}
-
-.musicCardHoverPhoto {
-    position: absolute;
-    display: none;
-    cursor: grab;
 }
 
 .musicCard:hover .musicCardHoverPhoto {

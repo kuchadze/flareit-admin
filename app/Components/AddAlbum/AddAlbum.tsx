@@ -36,7 +36,6 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         },
                     },
                 );
-                console.log('Response:', response.data);
             } catch (error) {
                 alert('error');
             }
@@ -91,6 +90,7 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         <input
                             id="fileInput"
                             type="file"
+                            multiple={false}
                             className={styles.fileInput}
                             {...register('coverImgUrl', {
                                 required: true,

@@ -35,7 +35,7 @@ const Artist = () => {
                     title='Add Artist'
                     children={<AddArtist ref={addArtistRef} onDone={handleModalDone}/>}
                     hasFooter={true}
-                    cancelText={'cancle'}
+                    cancelText={'cancel'}
                     confirmText={'done'}
                     onDone={handleModalDone}
                 />

@@ -122,6 +122,7 @@ const Albums = () => {
             <div className={styles.albumCard}>
                 {data.map((item) => (
                     <AlbumCard
+                        key={item.id}
                         image={item.image}
                         albumName={item.albumName}
                         year={item.year}

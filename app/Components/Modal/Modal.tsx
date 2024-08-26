@@ -8,7 +8,7 @@ interface Props {
     setIsModalOpen: (value: boolean) => void;
     title?: string;
     onDone?: () => void;
-    children: ReactNode;
+    children?: ReactNode;
     hasFooter: boolean;
     cancelText: string;
     confirmText: string;
@@ -40,6 +40,7 @@ const Modal = (props: Props) => {
                         onClick={onClose}
                     >
                         <Image
+                        className={styles.closeButton}
                             src={'/images/closeButton.svg'}
                             width={24}
                             height={24}
