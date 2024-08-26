@@ -8,7 +8,7 @@ interface Props {
     setIsModalOpen: (value: boolean) => void;
     title?: string;
     onDone?: () => void;
-    children: ReactNode;
+    children?: ReactNode;
     hasFooter: boolean;
     cancelText: string;
     confirmText: string;

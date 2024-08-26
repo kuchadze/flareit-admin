@@ -1,8 +1,12 @@
 import styles from './DeleteBox.module.scss';
+import Modal from '../Modal/Modal';
 
 interface Props {
     id: number;
     delete: boolean;
+    setRemove: () => void;
+    remove: boolean;
+    onConfirm: () => void;
 }
 
 const DeleteBox = (props: Props) => {
@@ -14,6 +18,18 @@ const DeleteBox = (props: Props) => {
                 src="/images/Delete.svg"
                 alt="Delete"
             />
+            {props.remove && (
+                <Modal
+                    isOpen={props.remove}
+                    title="Are you sure?"
+                    setIsModalOpen={props.setRemove}
+                    hasFooter={true}
+                    cancelText="Cancel"
+                    confirmText="Delete"
+                    onDone={props.onConfirm}
+                    children={null}
+                />
+            )}
         </>
     );
 };

@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import AddButton from '../../AddButton/AddButton';
 import styles from './OneAlbumsById.module.scss';
 import Modal from '../../Modal/Modal';
-import AddAlbum from '../../AddAlbum/AddAlbum';
 import axios from 'axios';
 import MusicCard from '../../MusicCard/MusicCard';
+import AddMusic from '../../AddMusic/AddMusic';
 
 interface Music {
     coverImgUrl: string;
@@ -100,7 +100,7 @@ const OneAlbumsById = () => {
                     isOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                     children={
-                        <AddAlbum ref={addArtistRef} onDone={handleModalDone} />
+                        <AddMusic ref={addArtistRef} onDone={handleModalDone} />
                     }
                     hasFooter={true}
                     title="Add Music"
