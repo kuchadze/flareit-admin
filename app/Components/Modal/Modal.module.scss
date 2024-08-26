@@ -35,6 +35,10 @@
     transition: transform 0.3s ease;
 }
 
+.closeButton {
+    cursor: pointer;
+}
+
 .modalHeader {
     display: flex;
     justify-content: space-between;

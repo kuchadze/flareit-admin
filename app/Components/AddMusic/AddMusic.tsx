@@ -24,20 +24,16 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddArtistProps>(
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();
             formData.append('title', values.title);
-            formData.append('artistName', values.artistName);
-            formData.append('lastName', values.lastName);
-            formData.append('releaseDate', values.releaseDate.toString());
-            formData.append('biography', values.biography);
 
-            if (values.coverImgUrl.length > 0) {
+            if (values.coverImgUrl && values.coverImgUrl.length > 0) {
                 formData.append('picture', values.coverImgUrl[0]);
             }
-            if (values.audio.length > 0) {
+            if (values.audio && values.audio.length > 0) {
                 formData.append('audio', values.audio[0]);
             }
 
             try {
-                const response = await axios.post(
+                await axios.post(
                     'https://enigma-wtuc.onrender.com/musics',
                     formData,
                     {
@@ -46,6 +42,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         },
                     },
                 );
+                alert('Music added successfully');
             } catch (error) {
                 alert('Error submitting form');
             }
@@ -79,14 +76,19 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddArtistProps>(
 
         return (
             <div className={styles.central}>
-                <form className={styles.form}>
+                <form
+                    className={styles.form}
+                    onSubmit={handleSubmit(onRegister)}
+                >
                     <div className={styles.inputGroup}>
                         <p className={styles.color}>Name</p>
                         <Input
-                            register={register('title', {
-                                required: true,
-                                minLength: 1,
-                            })}
+                            register={{
+                                ...register('title', {
+                                    required: true,
+                                    minLength: 1,
+                                }),
+                            }}
                             placeholder="Music Name"
                         />
                     </div>
@@ -95,10 +97,8 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                             id="audioInput"
                             type="file"
                             className={styles.fileInput}
-                            {...register('audio', {
-                                required: 'Audio file is required',
-                            })}
                             onChange={handleAudioChange}
+                            multiple={false}
                         />
                         <label
                             htmlFor="audioInput"
@@ -113,10 +113,8 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                             id="coverImgInput"
                             type="file"
                             className={styles.fileInput}
-                            {...register('coverImgUrl', {
-                                required: 'Cover image is required',
-                            })}
                             onChange={handleCoverImgChange}
+                            multiple={false}
                         />
                         <label
                             htmlFor="coverImgInput"

@@ -16,7 +16,8 @@ interface Music {
 const OneAlbumsById = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const addArtistRef = useRef<{ submitForm: () => void }>(null);
-    const [music, setMusic] = useState<Music[]>([]);
+    const [musics, setMusics] = useState<Music[]>([]);
+
     const handleModalDone = () => {
         if (addArtistRef.current) {
             addArtistRef.current.submitForm();
@@ -38,10 +39,10 @@ const OneAlbumsById = () => {
         axios
             .get('https://enigma-wtuc.onrender.com/musics')
             .then((result) => {
-                setMusic(result.data);
+                setMusics(result.data);
             })
-            .catch((error) => {
-                alert(error);
+            .catch(() => {
+                alert('Failed to fetch music data');
             });
     }, []);
 
@@ -81,14 +82,14 @@ const OneAlbumsById = () => {
                 <div className={styles.musicCardContainer}>
                     <p className={styles.tenSong}>10 songs</p>
                     <div className={styles.musicCard}>
-                        {music.map((item, index) => (
+                        {musics.map((item, index) => (
                             <MusicCard
+                                key={item.id}
                                 image={item.coverImgUrl}
                                 title={item.title}
                                 teamName={item.title}
                                 id={item.id}
                                 index={index}
-                                key={item.id}
                                 delete={false}
                             />
                         ))}

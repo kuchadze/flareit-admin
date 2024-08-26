@@ -90,6 +90,7 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         <input
                             id="fileInput"
                             type="file"
+                            multiple={false}
                             className={styles.fileInput}
                             {...register('coverImgUrl', {
                                 required: true,
