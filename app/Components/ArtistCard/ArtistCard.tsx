@@ -10,7 +10,7 @@ interface Props {
 
 const ArtistCard = (props: Props) => {
     return (
-        <Link className={styles.link} href={`/artists/${props.id}`}>
+        <Link className={styles.link} href={`/artists`}>
             <div className={styles.container}>
                 <div className={styles.containerCenter}>
                     <div className={styles.imageContainer}>
