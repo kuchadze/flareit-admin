@@ -1,20 +1,22 @@
-import { forwardRef, useImperativeHandle } from 'react';
-import styles from './AddAlbum.module.scss';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { FormValues } from '@/app/interfaces/interface';
-import axios from 'axios';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import Input from '../Input/Input';
+import styles from './AddAlbum.module.scss';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import axios from 'axios';
+import { FormValues } from '@/app/interfaces/interface';
 
 interface AddArtistProps {
     onDone?: () => void;
 }
 
-const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
+const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
     ({ onDone }, ref) => {
+        const [fileName, setFileName] = useState<string>('');
         const {
             handleSubmit,
             register,
             formState: { errors },
+            setValue, // To set the value of the file input in the form
         } = useForm<FormValues>();
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
@@ -23,8 +25,8 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
             formData.append('artistName', values.artistName);
             formData.append('releaseDate', values.releaseDate.toString());
 
-            if (values.coverImgUrl.length > 0) {
-                formData.append('picture', values.coverImgUrl[0]);
+            if (values.coverImgUrl) { // Check if file is not null
+                formData.append('picture', values.coverImgUrl);
             }
             try {
                 const response = await axios.post(
@@ -37,7 +39,7 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                     },
                 );
             } catch (error) {
-                alert('error');
+                alert('Error uploading data');
             }
 
             if (onDone) {
@@ -48,6 +50,17 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
         useImperativeHandle(ref, () => ({
             submitForm: handleSubmit(onRegister),
         }));
+
+        const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const file = event.target.files?.[0] || null;
+            if (file) {
+                setFileName(file.name);
+                setValue('coverImgUrl', file); // Set file in the form values
+            } else {
+                setFileName(''); // Clear file name if no file is selected
+                setValue('coverImgUrl', null); // Clear file input
+            }
+        };
 
         return (
             <div className={styles.central}>
@@ -92,16 +105,14 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                             type="file"
                             multiple={false}
                             className={styles.fileInput}
-                            {...register('coverImgUrl', {
-                                required: true,
-                            })}
+                            onChange={handleFileChange}
                         />
                         <label
                             htmlFor="fileInput"
                             className={styles.customButton}
                         >
                             <img src="/images/Image.svg" alt="Upload icon" />
-                            <p>Upload album cover</p>
+                            <p>{fileName || 'Upload artist photo'}</p>
                         </label>
                     </div>
                 </form>
@@ -110,4 +121,4 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddArtistProps>(
     },
 );
 
-export default AddAlbum;
+export default AddArtist;
