@@ -4,12 +4,9 @@ import styles from './UserManagementTable.module.scss';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import IconButton from '../IconButton/IconButton';
-
-interface User {
-    key: string;
-    email: string;
-    addedDate: string;
-}
+import { User } from '@/app/interfaces/interface';
+import Link from 'next/link';
+import router from 'next/router';
 
 const UserManagementTable = () => {
     const columns: ColumnsType<User> = [
@@ -18,6 +15,15 @@ const UserManagementTable = () => {
             dataIndex: 'email',
             key: 'email',
             width: '40%',
+            render: (email: string, record: { key: string }) => (
+                <Link
+                    href="/playlists"
+                    onClick={() => router.push(`/playlists/${record.key}`)}
+                    className={styles.emailLink}
+                >
+                    {email}
+                </Link>
+            ),
         },
         {
             title: 'added date',
