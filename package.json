@@ -12,6 +12,8 @@
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "antd": "^5.20.2",
     "axios": "^1.7.4",
+    "date-and-time": "^3.5.0",
+    "date-fns": "^3.6.0",
     "lint": "^1.1.2",
     "next": "^14.2.5",
     "react": "^18.3.1",
