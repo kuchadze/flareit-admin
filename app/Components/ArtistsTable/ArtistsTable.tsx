@@ -1,77 +1,106 @@
 'use client';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
-import React from 'react';
 import ArtistInfo from '../ArtistInfo/ArtistInfo';
 import IconButton from '../IconButton/IconButton';
 import styles from '@/app/Components/ArtistsTable/ArtistsTable.module.scss';
+import axios from 'axios';
+import { format } from 'date-fns';
+import DeleteBox from '../DeleteBox/DeleteBox';
+
+interface Artist {
+    coverImgUrl: string;
+    artistName: string;
+    id: number;
+    year: string;
+    songs: number;
+    createdAt: string;
+}
 
 const ArtistsTable = () => {
+    const [artists, setArtists] = useState<Artist[]>([]);
+    const [showModal, setShowModal] = useState<number | null>(null);
+
+    useEffect(() => {
+        const fetchArtists = async () => {
+            try {
+                const result = await axios.get('https://enigma-wtuc.onrender.com/authors');
+                setArtists(result.data);
+            } catch (error) {
+                alert('Error fetching artists');
+            }
+        };
+
+        fetchArtists();
+    }, []);
+
+    const formatDate = (dateString: string) => format(new Date(dateString), 'dd.MM.yyyy');
+
+    const handleDelete = async (id: number) => {
+        try {
+            await axios.delete(`https://enigma-wtuc.onrender.com/authors/${id}`);
+            setArtists(prevArtists => prevArtists.filter(artist => artist.id !== id));
+        } catch (error) {
+            alert('Error deleting artist');
+        } finally {
+            setShowModal(null); 
+        }
+    };
+
     const columns = [
         {
-            title: 'name',
-            dataIndex: 'name',
+            title: 'Name',
             key: 'name',
-            render: (text: string) => (
-                <ArtistInfo image={'/images/imany.jpeg'} artistName={text} />
+            render: (_: any, record: Artist) => (
+                <ArtistInfo
+                    image={record.coverImgUrl}
+                    artistName={record.artistName}
+                />
             ),
         },
         {
-            title: 'year',
+            title: 'Year',
             dataIndex: 'year',
             key: 'year',
         },
         {
-            title: 'songs',
+            title: 'Songs',
             dataIndex: 'songs',
             key: 'songs',
         },
         {
-            title: 'added Date',
-            dataIndex: 'added date',
-            key: 'added date',
+            title: 'Added Date',
+            dataIndex: 'createdAt',
+            key: 'addedDate',
+            render: (text: string) => formatDate(text),
         },
         {
             title: '',
-            dataIndex: 'buttons',
             key: 'buttons',
-            render: () => (
+            render: (_: any, record: Artist) => (
                 <div className={styles.buttons}>
                     <IconButton src={'/icons/iconButton/addAlbum.svg'} />
+                    <DeleteBox
+                        id={record.id}
+                        delete={true} 
+                        setRemove={() => setShowModal(showModal === record.id ? null : record.id)}
+                        remove={showModal === record.id} 
+                        onConfirm={() => handleDelete(record.id)}
+                        height="32px"
+                        width="32px"
+                    />
                 </div>
             ),
-        },
-    ];
-
-    const data = [
-        {
-            key: '1',
-            name: 'imany',
-            year: 1979,
-            songs: 11,
-            'added date': '2024-08-01',
-        },
-        {
-            key: '2',
-            name: 'coldplay',
-            year: 1997,
-            songs: 9,
-            'added date': '2024-08-02',
-        },
-        {
-            key: '3',
-            name: 'the beatles',
-            year: 1960,
-            songs: 3,
-            'added date': '2024-08-03',
         },
     ];
 
     return (
         <Table
             columns={columns}
-            dataSource={data}
+            dataSource={artists}
             pagination={false}
             rowClassName="rows"
+            rowKey="id"
         />
     );
 };

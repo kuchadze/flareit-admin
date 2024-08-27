@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import styles from "./iconsButton.module.scss"
 
 interface Props {
     src: string;
@@ -7,7 +8,7 @@ interface Props {
 const IconButton = (props: Props) => {
     return (
         <div>
-            <Image src={props.src} width={32} height={32} alt="Icon" />
+            <img className={styles.icon} src={props.src} alt="Icon" />
         </div>
     );
 };

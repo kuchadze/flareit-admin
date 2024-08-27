@@ -28,7 +28,7 @@ const Artist = () => {
                         }}
                     />
                 </div>
-                <div>
+                <div className={styles.artistPadd}>
                     <span className={styles.artistsTitle}>all artists</span>
                     <ArtistsTable />
                 </div>

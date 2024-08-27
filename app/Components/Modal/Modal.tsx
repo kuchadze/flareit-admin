@@ -16,10 +16,12 @@ interface Props {
 
 const Modal = (props: Props) => {
     const onClose = () => {
+        console.log('Modal close clicked');
         props.setIsModalOpen(false);
     };
 
     const onConfirm = () => {
+        console.log('Modal confirm clicked');
         if (props.onDone) {
             props.onDone();
         }
@@ -40,7 +42,7 @@ const Modal = (props: Props) => {
                         onClick={onClose}
                     >
                         <Image
-                        className={styles.closeButton}
+                            className={styles.closeButton}
                             src={'/images/closeButton.svg'}
                             width={24}
                             height={24}

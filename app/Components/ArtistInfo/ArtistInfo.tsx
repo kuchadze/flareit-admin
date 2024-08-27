@@ -6,17 +6,19 @@ interface Props {
     artistName: string;
 }
 
-const ArtistInfo = (props: Props) => {
+const ArtistInfo = ({ image, artistName }: Props) => {
     return (
         <div className={styles.container}>
             <Image
-                src={props.image}
+                src={image}
                 width={40}
                 height={40}
                 alt="Artist Photo"
                 className={styles.image}
             />
-            <span className={styles.artistName}>{props.artistName}</span>
+            <div className={styles.info}>
+                <span className={styles.artistName}>{artistName}</span>
+            </div>
         </div>
     );
 };
