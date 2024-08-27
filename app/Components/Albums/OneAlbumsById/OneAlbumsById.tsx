@@ -90,7 +90,7 @@ const OneAlbumsById = () => {
                                 teamName={item.title}
                                 id={item.id}
                                 index={index}
-                                delete={false}
+                                delete={true}
                             />
                         ))}
                     </div>

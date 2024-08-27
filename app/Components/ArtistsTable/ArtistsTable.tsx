@@ -59,13 +59,13 @@ const ArtistsTable = () => {
             ),
         },
         {
-            title: 'Year',
-            dataIndex: 'year',
-            key: 'year',
+            title: 'releaseDate',
+            dataIndex: 'releaseDate',
+            key: 'releaseDate',
         },
         {
             title: 'Songs',
-            dataIndex: 'songs',
+            dataIndex: 'musicsCount',
             key: 'songs',
         },
         {

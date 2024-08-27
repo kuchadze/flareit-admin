@@ -5,16 +5,58 @@ import styles from './PlaylistsTable.module.scss';
 import PlaylistInfo from '../PlaylistInfo/PlaylistInfo';
 import IconButton from '../IconButton/IconButton';
 import type { ColumnsType } from 'antd/es/table';
-import { Playlist } from '@/app/interfaces/interface';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import DeleteBox from '../DeleteBox/DeleteBox';
+
+interface Playlist {
+    id: number;
+    name: string;
+    songs: number;
+    imageSrc: string;
+}
 
 const PlaylistsTable = () => {
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
+    const [showModal, setShowModal] = useState<number | null>(null);
+
+    useEffect(() => {
+        const fetchPlaylists = async () => {
+            try {
+                const result = await axios.get(
+                    'https://enigma-wtuc.onrender.com/playlists',
+                );
+                setPlaylists(result.data);
+            } catch (error) {
+                alert('Error fetching playlists');
+            }
+        };
+
+        fetchPlaylists();
+    }, []);
+
+    const handleDelete = async (id: number) => {
+        try {
+            await axios.delete(
+                `https://enigma-wtuc.onrender.com/playlists/${id}`,
+            );
+            setPlaylists((prevPlaylists) =>
+                prevPlaylists.filter((playlist) => playlist.id !== id),
+            );
+        } catch (error) {
+            alert('Error deleting playlist');
+        } finally {
+            setShowModal(null);
+        }
+    };
+
     const columns: ColumnsType<Playlist> = [
         {
-            title: 'name',
-            dataIndex: 'name',
+            title: 'Name',
+            dataIndex: 'title',
             key: 'name',
             width: '40%',
-            render: (name: string, record: { imageSrc: string }) => (
+            render: (name: string, record: Playlist) => (
                 <PlaylistInfo
                     image={record.imageSrc || '/images/playlistImage.png'}
                     playlistName={name}
@@ -22,8 +64,8 @@ const PlaylistsTable = () => {
             ),
         },
         {
-            title: 'songs',
-            dataIndex: 'songs',
+            title: 'Songs',
+            dataIndex: 'musicsCount',
             key: 'songs',
         },
         {
@@ -31,92 +73,36 @@ const PlaylistsTable = () => {
             dataIndex: 'buttons',
             key: 'buttons',
             align: 'right',
-            render: () => (
+            width: '100px',
+            render: (text: any, record: Playlist) => (
                 <div className={styles.buttons}>
                     <IconButton src={'/icons/iconButton/editButton.svg'} />
+                    <DeleteBox
+                        id={record.id}
+                        delete={true}
+                        setRemove={() =>
+                            setShowModal(
+                                showModal === record.id ? null : record.id,
+                            )
+                        }
+                        remove={showModal === record.id}
+                        onConfirm={() => handleDelete(record.id)}
+                        height="32px"
+                        width="32px"
+                    />
                 </div>
             ),
         },
     ];
 
-    const data = [
-        {
-            key: '1',
-            name: 'car Songs',
-            songs: 10,
-            imageSrc: '/images/playlistCarSongs.png',
-        },
-        {
-            key: '2',
-            name: 'my everyday',
-            songs: 8,
-            imageSrc: '/images/playlistMyEveryday.png',
-        },
-        {
-            key: '3',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '4',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '5',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '6',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '7',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '8',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '9',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '10',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '11',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-        {
-            key: '12',
-            name: 'party songs',
-            songs: 15,
-            imageSrc: '/images/playlistPartySongs.png',
-        },
-    ];
-
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={false} />
+            <Table
+                columns={columns}
+                dataSource={playlists}
+                pagination={false}
+                rowKey="key"
+            />
         </div>
     );
 };
