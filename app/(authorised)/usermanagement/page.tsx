@@ -1,5 +1,11 @@
+import UserManagementTable from '@/app/Components/UserManagementTable/UserManagementTable';
+
 const UserManagementPage = () => {
-    return <div></div>;
+    return (
+        <div>
+            <UserManagementTable />
+        </div>
+    );
 };
 
 export default UserManagementPage;
