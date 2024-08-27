@@ -5,7 +5,7 @@ import ArtistInfo from '../ArtistInfo/ArtistInfo';
 import IconButton from '../IconButton/IconButton';
 import styles from '@/app/Components/ArtistsTable/ArtistsTable.module.scss';
 import axios from 'axios';
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 import DeleteBox from '../DeleteBox/DeleteBox';
 
 interface Artist {
@@ -24,7 +24,9 @@ const ArtistsTable = () => {
     useEffect(() => {
         const fetchArtists = async () => {
             try {
-                const result = await axios.get('https://enigma-wtuc.onrender.com/authors');
+                const result = await axios.get(
+                    'https://enigma-wtuc.onrender.com/authors',
+                );
                 setArtists(result.data);
             } catch (error) {
                 alert('Error fetching artists');
@@ -34,19 +36,23 @@ const ArtistsTable = () => {
         fetchArtists();
     }, []);
 
-    const formatDate = (dateString: string) => format(new Date(dateString), 'dd.MM.yyyy');
-
     const handleDelete = async (id: number) => {
         try {
-            await axios.delete(`https://enigma-wtuc.onrender.com/authors/${id}`);
-            setArtists(prevArtists => prevArtists.filter(artist => artist.id !== id));
+            await axios.delete(
+                `https://enigma-wtuc.onrender.com/authors/${id}`,
+            );
+            setArtists((prevArtists) =>
+                prevArtists.filter((artist) => artist.id !== id),
+            );
         } catch (error) {
             alert('Error deleting artist');
         } finally {
-            setShowModal(null); 
+            setShowModal(null);
         }
     };
 
+    const formatDate = (dateString: string) =>
+        format(new Date(dateString), 'dd.MM.yyyy');
     const columns = [
         {
             title: 'Name',
@@ -79,12 +85,18 @@ const ArtistsTable = () => {
             key: 'buttons',
             render: (_: any, record: Artist) => (
                 <div className={styles.buttons}>
-                    <IconButton src={'/icons/iconButton/addAlbum.svg'} />
+                    <div>
+                        <IconButton src={'/icons/iconButton/addAlbum.svg'} />
+                    </div>
                     <DeleteBox
                         id={record.id}
-                        delete={true} 
-                        setRemove={() => setShowModal(showModal === record.id ? null : record.id)}
-                        remove={showModal === record.id} 
+                        delete={true}
+                        setRemove={() =>
+                            setShowModal(
+                                showModal === record.id ? null : record.id,
+                            )
+                        }
+                        remove={showModal === record.id}
                         onConfirm={() => handleDelete(record.id)}
                         height="32px"
                         width="32px"

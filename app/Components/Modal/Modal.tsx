@@ -15,13 +15,13 @@ interface Props {
 }
 
 const Modal = (props: Props) => {
+    if (!props.isOpen) return null; // Early return if modal is not open
+
     const onClose = () => {
-        console.log('Modal close clicked');
         props.setIsModalOpen(false);
     };
 
     const onConfirm = () => {
-        console.log('Modal confirm clicked');
         if (props.onDone) {
             props.onDone();
         }
@@ -29,21 +29,14 @@ const Modal = (props: Props) => {
     };
 
     return (
-        <div
-            className={
-                props.isOpen ? styles.modalOverlay : styles.modalOverlayClosed
-            }
-        >
+        <div className={styles.modalOverlay}>
             <div className={styles.modal}>
                 <div className={styles.modalHeader}>
                     <h4 className={styles.sectionTitle}>{props.title}</h4>
-                    <div
-                        className={styles.closeButtonWrapper}
-                        onClick={onClose}
-                    >
+                    <div className={styles.closeButtonWrapper} onClick={onClose}>
                         <Image
                             className={styles.closeButton}
-                            src={'/images/closeButton.svg'}
+                            src='/images/closeButton.svg'
                             width={24}
                             height={24}
                             alt="Close Button"
