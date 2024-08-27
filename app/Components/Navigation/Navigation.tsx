@@ -3,11 +3,8 @@
 import { useState } from 'react';
 import styles from './Navigation.module.scss';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
-import { useRecoilState } from 'recoil';
 import Logo from '../Logo/Logo';
 import NavigationItem from './NavigationItem/NavigatonItem';
-import { title } from 'process';
 
 const Navigation = () => {
     const data = [
