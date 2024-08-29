@@ -6,6 +6,7 @@ import Modal from '../../Modal/Modal';
 import axios from 'axios';
 import MusicCard from '../../MusicCard/MusicCard';
 import AddMusic from '../../AddMusic/AddMusic';
+import { useParams } from 'next/navigation';
 
 interface Music {
     coverImgUrl: string;
@@ -26,8 +27,8 @@ const OneAlbumsById = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const addMusicRef = useRef<{ submitForm: () => void }>(null);
     const [musics, setMusics] = useState<Music[]>([]);
-    const [albums, setAlbums] = useState<Album[]>([]);
-    console.log(albums);
+    const [album, setAlbum] = useState<Album | null>(null);
+    console.log(album);
 
     const handleModalDone = () => {
         if (addMusicRef.current) {
@@ -36,53 +37,63 @@ const OneAlbumsById = () => {
         setIsModalOpen(false);
     };
 
+    const { id } = useParams(); // TypeScript might need proper typing here
+
     useEffect(() => {
-        axios.get(`https://enigma-wtuc.onrender.com/albums/25`).then((res) => {
-            setAlbums(res.data.authors);
-            setMusics(res.data.musics);
-        });
-    });
-    console.log(albums, 'zd');
+        if (id) {
+            axios
+                .get(`https://enigma-wtuc.onrender.com/albums/${id}`)
+                .then((res) => {
+                    setAlbum(res.data);
+                    setMusics(res.data.musics);
+                })
+                .catch((error) => {
+                    console.error('Error fetching album data:', error);
+                });
+        }
+    }, [id]);
+
+    if (!album) {
+        return <p>Loading...</p>; // You can improve this with a more user-friendly loading state
+    }
 
     return (
         <>
             <div className={styles.container}>
-                {albums?.map((album) => (
-                    <div key={album.id} className={styles.albumCard}>
-                        <p className={styles.albumTitle}>{album.title}</p>
-                        <img
-                            src={album.coverImgUrl}
-                            className={styles.imageCont}
-                            alt={album.title}
-                        />
-                        <div className={styles.albumDetails}>
-                            <div className={styles.nameCont}>
-                                <div className={styles.name}>
-                                    <p className={styles.albumArtist}>
-                                        {album.artistName} -
-                                    </p>
-                                    <p className={styles.artistName}>
-                                        {album.artistName}
-                                    </p>
-                                </div>
-                                <span className={styles.year}>
-                                    {album.releaseDate}
-                                </span>
+                <div className={styles.albumCard}>
+                    <p className={styles.albumTitle}>Albums</p>
+                    <img
+                        src={album.coverImgUrl}
+                        className={styles.imageCont}
+                        alt={album.title}
+                    />
+                    <div className={styles.albumDetails}>
+                        <div className={styles.nameCont}>
+                            <div className={styles.name}>
+                                <p className={styles.albumArtist}>
+                                    {album.artistName} -
+                                </p>
+                                <p className={styles.artistName}>
+                                    {album.artistName}
+                                </p>
                             </div>
-
-                            <AddButton
-                                text={'Add Music'}
-                                onClick={() => setIsModalOpen(true)}
-                            />
+                            <span className={styles.year}>
+                                {album.releaseDate}
+                            </span>
                         </div>
+
+                        <AddButton
+                            text={'Add Music'}
+                            onClick={() => setIsModalOpen(true)}
+                        />
                     </div>
-                ))}
+                </div>
                 <div className={styles.musicCardContainer}>
-                    <p className={styles.tenSong}>10 songs</p>
+                    <p className={styles.tenSong}>{musics.length} songs</p>
                     <div className={styles.musicCard}>
                         {musics.map((item, index) => (
                             <MusicCard
-                                key={item.id}
+                                key={item.id} // Unique key for each MusicCard
                                 image={item.coverImgUrl}
                                 title={item.title}
                                 teamName={item.title}
