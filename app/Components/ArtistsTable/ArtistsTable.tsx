@@ -5,7 +5,7 @@ import ArtistInfo from '../ArtistInfo/ArtistInfo';
 import IconButton from '../IconButton/IconButton';
 import styles from '@/app/Components/ArtistsTable/ArtistsTable.module.scss';
 import axios from 'axios';
-import { format, set } from 'date-fns';
+import { format } from 'date-fns';
 import DeleteBox from '../DeleteBox/DeleteBox';
 
 interface Artist {
@@ -55,9 +55,9 @@ const ArtistsTable = () => {
         format(new Date(dateString), 'dd.MM.yyyy');
     const columns = [
         {
-            title: 'Name',
+            title: 'Name, Surname',
             key: 'name',
-            render: (_: any, record: Artist) => (
+            render: (_: string, record: Artist) => (
                 <ArtistInfo
                     image={record.coverImgUrl}
                     artistName={record.artistName}
@@ -65,7 +65,7 @@ const ArtistsTable = () => {
             ),
         },
         {
-            title: 'releaseDate',
+            title: 'Release Date',
             dataIndex: 'releaseDate',
             key: 'releaseDate',
         },
@@ -83,7 +83,7 @@ const ArtistsTable = () => {
         {
             title: '',
             key: 'buttons',
-            render: (_: any, record: Artist) => (
+            render: (_: string, record: Artist) => (
                 <div className={styles.buttons}>
                     <div>
                         <IconButton src={'/icons/iconButton/addAlbum.svg'} />
