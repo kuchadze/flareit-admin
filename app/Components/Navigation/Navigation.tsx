@@ -12,7 +12,7 @@ const Navigation = () => {
         {
             title: 'Artists',
             href: '/artists',
-            image: '/Images/Artist.svg',
+            image: '/Images/artist.svg',
             key: '/artists',
         },
         {
