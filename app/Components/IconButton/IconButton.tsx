@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styles from './iconsButton.module.scss';
 import { useRef, useState } from 'react';
 import AddAlbum from '../AddAlbum/AddAlbum';
-import Modal from '../Modal/Modal'; // Ensure the import path is correct
+import Modal from '../Modal/Modal';
 
 interface Props {
     src: string;

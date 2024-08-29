@@ -74,7 +74,7 @@ const PlaylistsTable = () => {
             key: 'buttons',
             align: 'right',
             width: '100px',
-            render: (text: any, record: Playlist) => (
+            render: (record: Playlist) => (
                 <div className={styles.buttons}>
                     <IconButton src={'/icons/iconButton/editButton.svg'} />
                     <DeleteBox

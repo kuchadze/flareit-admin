@@ -100,15 +100,14 @@ const OneAlbumsById = () => {
                 <Modal
                     isOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
-                    children={
-                        <AddMusic ref={addArtistRef} onDone={handleModalDone} />
-                    }
                     hasFooter={true}
                     title="Add Music"
                     onDone={handleModalDone}
                     cancelText={'cancel'}
                     confirmText={'done'}
-                />
+                >
+                    <AddMusic ref={addArtistRef} onDone={handleModalDone} />
+                </Modal>
             )}
         </>
     );

@@ -35,8 +35,7 @@ const DeleteBox = (props: Props) => {
                 cancelText="Cancel"
                 confirmText="Delete"
                 onDone={props.onConfirm}
-                children={null}
-            />
+            ></Modal>
         </>
     );
 };

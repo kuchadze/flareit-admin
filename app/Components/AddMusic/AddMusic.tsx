@@ -1,15 +1,20 @@
-import { FormValues } from '@/app/interfaces/interface';
-import axios from 'axios';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import axios from 'axios';
 import Input from '../Input/Input';
 import styles from './AddMusic.module.scss';
 
-interface AddArtistProps {
+interface AddMusicProps {
     onDone?: () => void;
 }
 
-const AddMusic = forwardRef<{ submitForm: () => void }, AddArtistProps>(
+export interface FormValues {
+    title: string;
+    coverImgUrl: FileList | null;
+    audio: FileList | null;
+}
+
+const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
     ({ onDone }, ref) => {
         const [audioFileName, setAudioFileName] = useState('');
         const [coverImgFileName, setCoverImgFileName] = useState('');
@@ -98,6 +103,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                             type="file"
                             className={styles.fileInput}
                             onChange={handleAudioChange}
+                            accept="audio/*"
                             multiple={false}
                         />
                         <label
@@ -114,6 +120,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                             type="file"
                             className={styles.fileInput}
                             onChange={handleCoverImgChange}
+                            accept="image/*"
                             multiple={false}
                         />
                         <label

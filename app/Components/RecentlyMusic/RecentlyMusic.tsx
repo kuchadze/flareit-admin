@@ -1,6 +1,4 @@
 import MusicCard from '../MusicCard/MusicCard';
-import styles from './RecentlyMusic.module.scss';
-
 const RecentlyMusic = () => {
     const data = [
         {

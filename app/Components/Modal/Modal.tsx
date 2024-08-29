@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Modal = (props: Props) => {
-    if (!props.isOpen) return null; // Early return if modal is not open
+    if (!props.isOpen) return null;
 
     const onClose = () => {
         props.setIsModalOpen(false);
@@ -33,10 +33,13 @@ const Modal = (props: Props) => {
             <div className={styles.modal}>
                 <div className={styles.modalHeader}>
                     <h4 className={styles.sectionTitle}>{props.title}</h4>
-                    <div className={styles.closeButtonWrapper} onClick={onClose}>
+                    <div
+                        className={styles.closeButtonWrapper}
+                        onClick={onClose}
+                    >
                         <Image
                             className={styles.closeButton}
-                            src='/images/closeButton.svg'
+                            src="/images/closeButton.svg"
                             width={24}
                             height={24}
                             alt="Close Button"

@@ -1,5 +1,4 @@
 import AlbumCard from '../AlbumCard/AlbumCard';
-import styles from './RecentlyAlbum.module.scss';
 
 const RecentlyAlbum = () => {
     const data = [
@@ -64,6 +63,7 @@ const RecentlyAlbum = () => {
         <>
             {data.map((item) => (
                 <AlbumCard
+                    key={item.id}
                     image={item.image}
                     albumName={item.albumName}
                     year={item.year}

@@ -1,5 +1,4 @@
 import ArtistCard from '../ArtistCard/ArtistCard';
-import styles from './RecentlyArtist.module.scss';
 
 const RecentlyArtist = () => {
     const data = [
