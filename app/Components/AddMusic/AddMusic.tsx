@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -19,12 +20,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
         const [audioFileName, setAudioFileName] = useState('');
         const [coverImgFileName, setCoverImgFileName] = useState('');
 
-        const {
-            handleSubmit,
-            register,
-            setValue,
-            formState: { errors },
-        } = useForm<FormValues>();
+        const { handleSubmit, register, setValue } = useForm<FormValues>();
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import styles from './iconsButton.module.scss';
 import { useRef, useState } from 'react';
 import AddAlbum from '../AddAlbum/AddAlbum';

@@ -9,13 +9,13 @@ interface AddArtistProps {
     onDone?: () => void;
 }
 
+// eslint-disable-next-line react/display-name
 const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
     ({ onDone }, ref) => {
         const [fileName, setFileName] = useState<string>('');
         const {
             handleSubmit,
             register,
-            formState: { errors },
             setValue, // To set the value of the file input in the form
         } = useForm<FormValues>();
 
@@ -25,11 +25,12 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
             formData.append('artistName', values.artistName);
             formData.append('releaseDate', values.releaseDate.toString());
 
-            if (values.coverImgUrl) { // Check if file is not null
+            if (values.coverImgUrl) {
+                // Check if file is not null
                 formData.append('picture', values.coverImgUrl);
             }
             try {
-                const response = await axios.post(
+                await axios.post(
                     'https://enigma-wtuc.onrender.com/albums',
                     formData,
                     {
@@ -51,7 +52,9 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
             submitForm: handleSubmit(onRegister),
         }));
 
-        const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const handleFileChange = (
+            event: React.ChangeEvent<HTMLInputElement>,
+        ) => {
             const file = event.target.files?.[0] || null;
             if (file) {
                 setFileName(file.name);

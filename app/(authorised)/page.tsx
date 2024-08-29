@@ -1,7 +1,4 @@
 'use client';
-
-import { useState, useRef } from 'react';
-import Modal from '../Components/Modal/Modal';
 import RecentlyAlbum from '../Components/RecentlyAlbum/RecentlyAlbum';
 import RecentlyArtist from '../Components/RecentlyArtist/RecentlyArtist';
 import RecentlyMusic from '../Components/RecentlyMusic/RecentlyMusic';

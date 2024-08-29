@@ -9,6 +9,7 @@ interface AddArtistProps {
     onDone?: () => void;
 }
 
+// eslint-disable-next-line react/display-name
 const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
     ({ onDone }, ref) => {
         const [fileName, setFileName] = useState<string>('');
@@ -31,7 +32,7 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
             }
 
             try {
-                const response = await axios.post(
+                await axios.post(
                     'https://enigma-wtuc.onrender.com/authors',
                     formData,
                     {

@@ -53,7 +53,7 @@ const PlaylistsTable = () => {
     const columns: ColumnsType<Playlist> = [
         {
             title: 'Name',
-            dataIndex: 'title',
+            dataIndex: 'name',
             key: 'name',
             width: '40%',
             render: (name: string, record: Playlist) => (
@@ -65,7 +65,7 @@ const PlaylistsTable = () => {
         },
         {
             title: 'Songs',
-            dataIndex: 'musicsCount',
+            dataIndex: 'songs',
             key: 'songs',
         },
         {
@@ -74,7 +74,7 @@ const PlaylistsTable = () => {
             key: 'buttons',
             align: 'right',
             width: '100px',
-            render: (record: Playlist) => (
+            render: (text: string, record: Playlist) => (
                 <div className={styles.buttons}>
                     <IconButton src={'/icons/iconButton/editButton.svg'} />
                     <DeleteBox
@@ -101,7 +101,7 @@ const PlaylistsTable = () => {
                 columns={columns}
                 dataSource={playlists}
                 pagination={false}
-                rowKey="key"
+                rowKey="id"
             />
         </div>
     );

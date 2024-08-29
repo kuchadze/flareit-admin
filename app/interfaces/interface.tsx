@@ -20,3 +20,11 @@ export interface Playlist {
     songs: number;
     imageSrc: string;
 }
+
+export interface Album {
+    id: number;
+    title: string;
+    releaseDate: string;
+    artistName: string;
+    coverImgUrl: string;
+}

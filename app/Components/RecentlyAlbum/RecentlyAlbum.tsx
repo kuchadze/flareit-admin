@@ -1,72 +1,30 @@
+import { useEffect, useState } from 'react';
 import AlbumCard from '../AlbumCard/AlbumCard';
+import axios from 'axios';
+import { Album } from '@/app/interfaces/interface';
 
 const RecentlyAlbum = () => {
-    const data = [
-        {
-            image: '/images/albumCover.svg',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 1,
-        },
-        {
-            image: '/images/albumCover.svg',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 2,
-        },
-        {
-            image: '/images/albumCover.svg',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 3,
-        },
-        {
-            image: '/images/albumCover.svg',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 4,
-        },
-        {
-            image: '/images/albumCover.svg',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 1,
-        },
-        {
-            image: '/images/albumCover.svg',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 2,
-        },
-        {
-            image: '/images/albumCover.svg',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 3,
-        },
-        {
-            image: '/images/albumCover.svg',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 4,
-        },
-    ];
+    const [albums, setAlbums] = useState<Album[]>([]);
+
+    useEffect(() => {
+        axios
+            .get('https://enigma-wtuc.onrender.com/albums')
+            .then((res) => {
+                setAlbums(res.data);
+            })
+            .catch((err) => {
+                alert(err);
+            });
+    }, []);
+
     return (
         <>
-            {data.map((item) => (
+            {albums.map((item) => (
                 <AlbumCard
                     key={item.id}
-                    image={item.image}
-                    albumName={item.albumName}
-                    year={item.year}
+                    image={item.coverImgUrl}
+                    albumName={item.title}
+                    year={item.releaseDate}
                     artistName={item.artistName}
                     id={item.id}
                     pagePathName={''}

@@ -13,68 +13,66 @@ interface Music {
     id: number;
 }
 
+interface Album {
+    title: string;
+    releaseDate: string;
+    coverImgUrl: string;
+    artistName: string;
+    id: number;
+    musics: Music[];
+}
+
 const OneAlbumsById = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const addArtistRef = useRef<{ submitForm: () => void }>(null);
+    const addMusicRef = useRef<{ submitForm: () => void }>(null);
     const [musics, setMusics] = useState<Music[]>([]);
+    const [albums, setAlbums] = useState<Album[]>([]);
+    console.log(albums);
 
     const handleModalDone = () => {
-        if (addArtistRef.current) {
-            addArtistRef.current.submitForm();
+        if (addMusicRef.current) {
+            addMusicRef.current.submitForm();
         }
         setIsModalOpen(false);
     };
 
-    const data = [
-        {
-            image: '/images/Image.png',
-            albumName: 'Havana',
-            year: '1998',
-            artistName: 'Camila Cabello',
-            id: 1,
-        },
-    ];
-
     useEffect(() => {
-        axios
-            .get('https://enigma-wtuc.onrender.com/musics')
-            .then((result) => {
-                setMusics(result.data);
-            })
-            .catch(() => {
-                alert('Failed to fetch music data');
-            });
-    }, []);
+        axios.get(`https://enigma-wtuc.onrender.com/albums/25`).then((res) => {
+            setAlbums(res.data.authors);
+            setMusics(res.data.musics);
+        });
+    });
+    console.log(albums, 'zd');
 
     return (
         <>
             <div className={styles.container}>
-                {data.map((item) => (
-                    <div key={item.id} className={styles.albumCard}>
-                        <p className={styles.albums}>Albums</p>
+                {albums?.map((album) => (
+                    <div key={album.id} className={styles.albumCard}>
+                        <p className={styles.albumTitle}>{album.title}</p>
                         <img
-                            src={item.image}
-                            alt={`Cover of album ${item.albumName}`}
+                            src={album.coverImgUrl}
                             className={styles.imageCont}
+                            alt={album.title}
                         />
                         <div className={styles.albumDetails}>
-                            <div className={styles.naemCont}>
+                            <div className={styles.nameCont}>
                                 <div className={styles.name}>
-                                    <p className={styles.albumName}>
-                                        {item.albumName}-
+                                    <p className={styles.albumArtist}>
+                                        {album.artistName} -
                                     </p>
                                     <p className={styles.artistName}>
-                                        {item.artistName}
+                                        {album.artistName}
                                     </p>
                                 </div>
-                                <span className={styles.year}>{item.year}</span>
+                                <span className={styles.year}>
+                                    {album.releaseDate}
+                                </span>
                             </div>
 
                             <AddButton
                                 text={'Add Music'}
-                                onClick={() => {
-                                    setIsModalOpen(true);
-                                }}
+                                onClick={() => setIsModalOpen(true)}
                             />
                         </div>
                     </div>
@@ -103,10 +101,10 @@ const OneAlbumsById = () => {
                     hasFooter={true}
                     title="Add Music"
                     onDone={handleModalDone}
-                    cancelText={'cancel'}
-                    confirmText={'done'}
+                    cancelText={'Cancel'}
+                    confirmText={'Done'}
                 >
-                    <AddMusic ref={addArtistRef} onDone={handleModalDone} />
+                    <AddMusic ref={addMusicRef} onDone={handleModalDone} />
                 </Modal>
             )}
         </>
