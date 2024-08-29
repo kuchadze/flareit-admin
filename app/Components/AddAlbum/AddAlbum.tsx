@@ -13,11 +13,7 @@ interface AddArtistProps {
 const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
     ({ onDone }, ref) => {
         const [fileName, setFileName] = useState<string>('');
-        const {
-            handleSubmit,
-            register,
-            setValue, // To set the value of the file input in the form
-        } = useForm<FormValues>();
+        const { handleSubmit, register, setValue } = useForm<FormValues>();
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();
@@ -26,7 +22,6 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
             formData.append('releaseDate', values.releaseDate.toString());
 
             if (values.coverImgUrl) {
-                // Check if file is not null
                 formData.append('picture', values.coverImgUrl);
             }
             try {
