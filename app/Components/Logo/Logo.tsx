@@ -3,7 +3,7 @@ import Link from 'next/link';
 const Logo = () => {
     return (
         <Link href={'/'}>
-            <img src="/Images/Logo.svg" alt="Logo" />
+            <img src="/images/logo.svg" alt="Logo" />
         </Link>
     );
 };

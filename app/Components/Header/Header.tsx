@@ -31,7 +31,7 @@ const Header = () => {
                         width={32}
                         height={32}
                         title={''}
-                        src={'/Images/LogOut.svg'}
+                        src={'/images/logOut.svg'}
                     />
                 </div>
                 <LogOutModal email={''} logOut={logOut} setLogOut={setLogOut} />

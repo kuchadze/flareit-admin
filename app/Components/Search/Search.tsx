@@ -20,7 +20,7 @@ const Search = () => {
             word: 'programming3',
             search_count: 10,
             last_searched: '2023-07-06',
-            icon: '/Images/square.svg',
+            icon: '/images/square.svg',
             type: 'album',
         },
         {
@@ -28,7 +28,7 @@ const Search = () => {
             word: 'programming4',
             search_count: 10,
             last_searched: '2023-07-06',
-            icon: '/Images/square.svg',
+            icon: '/images/square.svg',
             type: 'album',
         },
         {
@@ -36,7 +36,7 @@ const Search = () => {
             word: 'programming5',
             search_count: 10,
             last_searched: '2023-07-06',
-            icon: '/Images/square2.svg',
+            icon: '/images/square2.svg',
             type: 'artist',
         },
         {
@@ -44,7 +44,7 @@ const Search = () => {
             word: 'programming6',
             search_count: 10,
             last_searched: '2023-07-06',
-            icon: '/Images/square2.svg',
+            icon: '/images/square2.svg',
             type: 'artist',
         },
     ];
@@ -75,8 +75,8 @@ const Search = () => {
                     <img
                         src={
                             search
-                                ? '/Images/searchWhite.svg'
-                                : '/Images/searchGrey.svg'
+                                ? '/images/searchWhite.svg'
+                                : '/images/searchGrey.svg'
                         }
                         alt="Search Icon"
                     />

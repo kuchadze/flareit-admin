@@ -8,17 +8,17 @@ import NavigationItem from './NavigationItem/NavigatonItem';
 
 const Navigation = () => {
     const data = [
-        { title: 'Home', href: '/', image: '/Images/Home.svg', key: '/' },
+        { title: 'Home', href: '/', image: '/images/home.svg', key: '/' },
         {
             title: 'Artists',
             href: '/artists',
-            image: '/Images/artist.svg',
+            image: '/images/artist.svg',
             key: '/artists',
         },
         {
             title: 'Albums',
             href: '/albums',
-            image: '/Images/Albums.svg',
+            image: '/images/albums.svg',
             key: '/albums',
         },
         {

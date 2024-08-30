@@ -122,7 +122,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                             htmlFor="audioInput"
                             className={styles.customButton}
                         >
-                            <img src="/images/AddMusic.svg" alt="Upload icon" />
+                            <img src="/images/addMusic.svg" alt="Upload icon" />
                             <p>{audioFileName || 'Upload music - Mp3'}</p>
                         </label>
                     </div>
@@ -139,7 +139,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                             htmlFor="coverImgInput"
                             className={styles.customButton}
                         >
-                            <img src="/images/Image.svg" alt="Upload icon" />
+                            <img src="/images/image.svg" alt="Upload icon" />
                             <p>{coverImgFileName || 'Upload album cover'}</p>
                         </label>
                     </div>
