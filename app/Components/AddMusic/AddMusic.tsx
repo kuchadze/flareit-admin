@@ -14,6 +14,7 @@ export interface FormValues {
     musicTitle: string;
     musicPicture: FileList | null;
     url: FileList | null;
+    artistName: string;
 }
 
 const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
@@ -28,6 +29,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();
             formData.append('musicTitle', values.musicTitle);
+            formData.append('artistName', values.artistName);
 
             if (values.musicPicture && values.musicPicture.length > 0) {
                 formData.append('musicPicture', values.musicPicture[0]);
@@ -93,6 +95,18 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                                 }),
                             }}
                             placeholder="Music Name"
+                        />
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <p className={styles.color}>artistName</p>
+                        <Input
+                            register={{
+                                ...register('artistName', {
+                                    required: true,
+                                    minLength: 1,
+                                }),
+                            }}
+                            placeholder="ArtistName"
                         />
                     </div>
                     <div className={styles.fileInputWrapper}>

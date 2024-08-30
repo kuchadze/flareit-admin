@@ -70,7 +70,7 @@ const OneAlbumsById = () => {
                         <div className={styles.nameCont}>
                             <div className={styles.name}>
                                 <p className={styles.albumArtist}>
-                                    {album.artistName} -
+                                    {album.title} -
                                 </p>
                                 <p className={styles.artistName}>
                                     {album.artistName}
