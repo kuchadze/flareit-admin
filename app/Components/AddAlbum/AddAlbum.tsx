@@ -8,7 +8,7 @@ import { FormValues } from '@/app/interfaces/interface';
 
 interface AddAlbumProps {
     onDone?: () => void;
-    id: number;
+    id?: number;
 }
 
 const AddAlbum = forwardRef<{ submitForm: () => void }, AddAlbumProps>(

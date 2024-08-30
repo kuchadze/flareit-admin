@@ -5,7 +5,7 @@ import Modal from '../Modal/Modal';
 
 interface Props {
     src: string;
-    id: number;
+    id?: number;
 }
 
 const IconButton = (props: Props) => {
