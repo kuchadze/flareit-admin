@@ -3,9 +3,9 @@ export interface FormValues {
     lastName: string;
     releaseDate: number;
     biography: string;
-    musicPicture: File | null;
-    musicTitle: string;
-    url: File | null;
+    coverImgUrl: File | null;
+    title: string;
+    audio: File | null;
 }
 
 export interface User {
