@@ -46,7 +46,7 @@ const RecentlyMusic = () => {
                     key={item.id}
                     image={item.image}
                     title={item.title}
-                    teamName={item.teamName}
+                    artistName={item.teamName}
                     id={item.id}
                     delete={false}
                     index={index}
