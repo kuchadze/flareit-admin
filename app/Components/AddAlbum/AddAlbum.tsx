@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import Input from '../Input/Input';
 import styles from './AddAlbum.module.scss';
@@ -5,28 +6,29 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
 import { FormValues } from '@/app/interfaces/interface';
 
-interface AddArtistProps {
+interface AddAlbumProps {
     onDone?: () => void;
+    id: number;
 }
 
-// eslint-disable-next-line react/display-name
-const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
-    ({ onDone }, ref) => {
+const AddAlbum = forwardRef<{ submitForm: () => void }, AddAlbumProps>(
+    ({ onDone, id }, ref) => {
         const [fileName, setFileName] = useState<string>('');
         const { handleSubmit, register, setValue } = useForm<FormValues>();
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();
-            formData.append('title', values.title);
-            formData.append('artistName', values.artistName);
-            formData.append('releaseDate', values.releaseDate.toString());
+            formData.append('albumTitle', values.albumTitle);
+            formData.append('albumArtistName', values.albumArtistName);
+            formData.append('albumReleaseDate', values.albumReleaseDate);
 
-            if (values.coverImgUrl) {
-                formData.append('picture', values.coverImgUrl);
+            if (values.albumPicture) {
+                formData.append('albumPicture', values.albumPicture);
             }
+
             try {
-                await axios.post(
-                    'https://enigma-wtuc.onrender.com/albums',
+                await axios.patch(
+                    `https://enigma-wtuc.onrender.com/authors/${id}`,
                     formData,
                     {
                         headers: {
@@ -34,12 +36,12 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         },
                     },
                 );
+
+                if (onDone) {
+                    onDone();
+                }
             } catch (error) {
                 alert('Error uploading data');
-            }
-
-            if (onDone) {
-                onDone();
             }
         };
 
@@ -53,33 +55,34 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
             const file = event.target.files?.[0] || null;
             if (file) {
                 setFileName(file.name);
-                setValue('coverImgUrl', file); // Set file in the form values
+                setValue('albumPicture', file);
             } else {
-                setFileName(''); // Clear file name if no file is selected
-                setValue('coverImgUrl', null); // Clear file input
+                setFileName('');
+                setValue('albumPicture', null);
             }
         };
 
         return (
             <div className={styles.central}>
-                <form className={styles.form}>
+                <form
+                    className={styles.form}
+                    onSubmit={handleSubmit(onRegister)}
+                >
                     <div className={styles.container}>
                         <div className={styles.inputGroup}>
-                            <p className={styles.color}>Name</p>
+                            <p className={styles.color}>Album Name</p>
                             <Input
-                                register={register('title', {
+                                register={register('albumTitle', {
                                     required: true,
-                                    minLength: 1,
                                 })}
                                 placeholder="Album Name"
                             />
                         </div>
                         <div className={styles.inputGroup}>
-                            <p className={styles.color}>Name</p>
+                            <p className={styles.color}>Artist Name</p>
                             <Input
-                                register={register('artistName', {
+                                register={register('albumArtistName', {
                                     required: true,
-                                    minLength: 1,
                                 })}
                                 placeholder="Artist Name"
                             />
@@ -89,9 +92,8 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         <p className={styles.color}>Year</p>
                         <input
                             className={styles.input}
-                            {...register('releaseDate', {
+                            {...register('albumReleaseDate', {
                                 required: true,
-                                minLength: 1,
                             })}
                             placeholder="Year"
                             type="number"
@@ -99,18 +101,17 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                     </div>
                     <div className={styles.fileInputWrapper}>
                         <input
-                            id="fileInput"
+                            id="albumPicture"
                             type="file"
-                            multiple={false}
                             className={styles.fileInput}
                             onChange={handleFileChange}
                         />
                         <label
-                            htmlFor="fileInput"
+                            htmlFor="albumPicture"
                             className={styles.customButton}
                         >
-                            <img src="/images/Image.svg" alt="Upload icon" />
-                            <p>{fileName || 'Upload artist photo'}</p>
+                            <img src="/images/image.svg" alt="Upload icon" />
+                            <p>{fileName || 'Upload album cover'}</p>
                         </label>
                     </div>
                 </form>
@@ -119,4 +120,4 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
     },
 );
 
-export default AddArtist;
+export default AddAlbum;

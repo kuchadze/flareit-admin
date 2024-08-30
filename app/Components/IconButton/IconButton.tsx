@@ -5,6 +5,7 @@ import Modal from '../Modal/Modal';
 
 interface Props {
     src: string;
+    id: number;
 }
 
 const IconButton = (props: Props) => {
@@ -35,7 +36,11 @@ const IconButton = (props: Props) => {
                 confirmText="Done"
                 onDone={handleModalDone}
             >
-                <AddAlbum ref={addArtistRef} onDone={handleModalDone} />
+                <AddAlbum
+                    ref={addArtistRef}
+                    onDone={handleModalDone}
+                    id={props.id}
+                />
             </Modal>
         </>
     );

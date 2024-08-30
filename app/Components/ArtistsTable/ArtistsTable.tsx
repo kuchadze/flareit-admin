@@ -86,7 +86,10 @@ const ArtistsTable = () => {
             render: (_: string, record: Artist) => (
                 <div className={styles.buttons}>
                     <div>
-                        <IconButton src={'/icons/iconButton/addAlbum.svg'} />
+                        <IconButton
+                            src={'/icons/iconButton/addAlbum.svg'}
+                            id={record.id}
+                        />
                     </div>
                     <DeleteBox
                         id={record.id}

@@ -4,8 +4,12 @@ export interface FormValues {
     releaseDate: number;
     biography: string;
     coverImgUrl: File | null;
+    albumTitle: string;
     title: string;
     audio: File | null;
+    albumReleaseDate: string;
+    albumArtistName: string;
+    albumPicture: File | null;
 }
 
 export interface User {
