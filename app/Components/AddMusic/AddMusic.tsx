@@ -4,15 +4,16 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
 import Input from '../Input/Input';
 import styles from './AddMusic.module.scss';
+import { useParams } from 'next/navigation';
 
 interface AddMusicProps {
     onDone?: () => void;
 }
 
 export interface FormValues {
-    title: string;
-    coverImgUrl: FileList | null;
-    audio: FileList | null;
+    musicTitle: string;
+    musicPicture: FileList | null;
+    url: FileList | null;
 }
 
 const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
@@ -21,21 +22,22 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
         const [coverImgFileName, setCoverImgFileName] = useState('');
 
         const { handleSubmit, register, setValue } = useForm<FormValues>();
+        const params = useParams();
+        const id = params.id;
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();
-            formData.append('title', values.title);
+            formData.append('musicTitle', values.musicTitle);
 
-            if (values.coverImgUrl && values.coverImgUrl.length > 0) {
-                formData.append('picture', values.coverImgUrl[0]);
+            if (values.musicPicture && values.musicPicture.length > 0) {
+                formData.append('musicPicture', values.musicPicture[0]);
             }
-            if (values.audio && values.audio.length > 0) {
-                formData.append('audio', values.audio[0]);
+            if (values.url && values.url.length > 0) {
+                formData.append('audio', values.url[0]);
             }
-
             try {
-                await axios.post(
-                    'https://enigma-wtuc.onrender.com/musics',
+                await axios.patch(
+                    `https://enigma-wtuc.onrender.com/albums/${id}`,
                     formData,
                     {
                         headers: {
@@ -62,7 +64,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
         ) => {
             if (event.target.files && event.target.files.length > 0) {
                 setAudioFileName(event.target.files[0].name);
-                setValue('audio', event.target.files);
+                setValue('url', event.target.files);
             }
         };
 
@@ -71,7 +73,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
         ) => {
             if (event.target.files && event.target.files.length > 0) {
                 setCoverImgFileName(event.target.files[0].name);
-                setValue('coverImgUrl', event.target.files);
+                setValue('musicPicture', event.target.files);
             }
         };
 
@@ -85,7 +87,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                         <p className={styles.color}>Name</p>
                         <Input
                             register={{
-                                ...register('title', {
+                                ...register('musicTitle', {
                                     required: true,
                                     minLength: 1,
                                 }),

@@ -28,7 +28,6 @@ const OneAlbumsById = () => {
     const addMusicRef = useRef<{ submitForm: () => void }>(null);
     const [musics, setMusics] = useState<Music[]>([]);
     const [album, setAlbum] = useState<Album | null>(null);
-    console.log(album);
 
     const handleModalDone = () => {
         if (addMusicRef.current) {
@@ -37,7 +36,7 @@ const OneAlbumsById = () => {
         setIsModalOpen(false);
     };
 
-    const { id } = useParams(); // TypeScript might need proper typing here
+    const { id } = useParams();
 
     useEffect(() => {
         if (id) {
@@ -48,13 +47,13 @@ const OneAlbumsById = () => {
                     setMusics(res.data.musics);
                 })
                 .catch((error) => {
-                    console.error('Error fetching album data:', error);
+                    alert(error);
                 });
         }
-    }, [id]);
+    }, [id, musics]);
 
     if (!album) {
-        return <p>Loading...</p>; // You can improve this with a more user-friendly loading state
+        return <p>Loading...</p>;
     }
 
     return (
@@ -93,7 +92,7 @@ const OneAlbumsById = () => {
                     <div className={styles.musicCard}>
                         {musics.map((item, index) => (
                             <MusicCard
-                                key={item.id} // Unique key for each MusicCard
+                                key={item.id}
                                 image={item.coverImgUrl}
                                 title={item.title}
                                 teamName={item.title}
