@@ -11,6 +11,7 @@ import { useParams } from 'next/navigation';
 interface Music {
     coverImgUrl: string;
     title: string;
+    artistName: string;
     id: number;
 }
 
@@ -95,7 +96,7 @@ const OneAlbumsById = () => {
                                 key={item.id}
                                 image={item.coverImgUrl}
                                 title={item.title}
-                                teamName={item.title}
+                                artistName={item.artistName}
                                 id={item.id}
                                 index={index}
                                 delete={true}

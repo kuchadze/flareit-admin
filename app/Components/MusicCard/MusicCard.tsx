@@ -6,7 +6,7 @@ import styles from './MusicCard.module.scss';
 interface Props {
     image: string;
     title: string;
-    teamName: string;
+    artistName: string;
     id: number;
     index: number;
     delete: boolean;
@@ -44,7 +44,7 @@ const MusicCard = (props: Props) => {
                 <div className={styles.musicCardTitle}>
                     <span className={styles.musicCardName}>{props.title}</span>
                     <span className={styles.musicCardTeam}>
-                        {props.teamName}
+                        {props.artistName}
                     </span>
                 </div>
             </div>
