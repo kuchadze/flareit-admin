@@ -1,64 +1,36 @@
+import { useEffect, useState } from 'react';
 import ArtistCard from '../ArtistCard/ArtistCard';
+import axios from 'axios';
+
+interface Artist {
+    id: number;
+    coverImgUrl: string;
+    artistName: string;
+    releaseDate: string;
+}
 
 const RecentlyArtist = () => {
-    const data = [
-        {
-            image: '/images/artistCard.svg',
-            artist: 'coldplay',
-            year: '1997',
-            id: 0,
-        },
-        {
-            image: '/images/artistCard.svg',
-            artist: 'coldplay',
-            year: '1997',
-            id: 1,
-        },
-        {
-            image: '/images/artistCard.svg',
-            artist: 'coldplay',
-            year: '1997',
-            id: 2,
-        },
-        {
-            image: '/images/artistCard.svg',
-            artist: 'coldplay',
-            year: '1997',
-            id: 3,
-        },
-        {
-            image: '/images/artistCard.svg',
-            artist: 'coldplay',
-            year: '1997',
-            id: 4,
-        },
-        {
-            image: '/images/artistCard.svg',
-            artist: 'coldplay',
-            year: '1997',
-            id: 5,
-        },
-        {
-            image: '/images/artistCard.svg',
-            artist: 'coldplay',
-            year: '1997',
-            id: 6,
-        },
-        {
-            image: '/images/artistCard.svg',
-            artist: 'coldplay',
-            year: '1997',
-            id: 7,
-        },
-    ];
+    const [artists, setArtists] = useState<Artist[]>([]);
+
+    useEffect(() => {
+        axios
+            .get('https://enigma-wtuc.onrender.com/authors/recent')
+            .then((result) => {
+                setArtists(result.data);
+            })
+            .catch((error) => {
+                alert(error);
+            });
+    });
+
     return (
         <>
-            {data.map((item) => (
+            {artists.map((item) => (
                 <ArtistCard
                     key={item.id}
-                    image={item.image}
-                    artist={item.artist}
-                    year={item.year}
+                    image={item.coverImgUrl}
+                    artist={item.artistName}
+                    year={item.releaseDate}
                     id={item.id}
                 />
             ))}

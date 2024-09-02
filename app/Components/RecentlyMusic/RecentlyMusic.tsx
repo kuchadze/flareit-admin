@@ -1,52 +1,30 @@
+import { useEffect, useState } from 'react';
 import MusicCard from '../MusicCard/MusicCard';
+import axios from 'axios';
+import { Music } from '@/app/interfaces/interface';
+
 const RecentlyMusic = () => {
-    const data = [
-        {
-            image: '/images/MusicCard.png',
-            title: 'Yellow',
-            teamName: 'Morgan Maxwell',
-            id: 1,
-        },
-        {
-            image: '/images/MusicCard.png',
-            title: 'Yellow',
-            teamName: 'Morgan Maxwell',
-            id: 2,
-        },
-        {
-            image: '/images/MusicCard.png',
-            title: 'Yellow',
-            teamName: 'Morgan Maxwell',
-            id: 3,
-        },
-        {
-            image: '/images/MusicCard.png',
-            title: 'Yellow',
-            teamName: 'Morgan Maxwell',
-            id: 4,
-        },
-        {
-            image: '/images/MusicCard.png',
-            title: 'Yellow',
-            teamName: 'Morgan Maxwell',
-            id: 5,
-        },
-        {
-            image: '/images/MusicCard.png',
-            title: 'Yellow',
-            teamName: 'Morgan Maxwell',
-            id: 6,
-        },
-    ];
+    const [music, setMusic] = useState<Music[]>([]);
+
+    useEffect(() => {
+        axios
+            .get('https://enigma-wtuc.onrender.com/musics/recent')
+            .then((result) => {
+                setMusic(result.data);
+            })
+            .catch((error) => {
+                alert(error);
+            });
+    });
 
     return (
         <>
-            {data.map((item, index) => (
+            {music.map((item, index) => (
                 <MusicCard
                     key={item.id}
-                    image={item.image}
+                    image={item.coverImgUrl}
                     title={item.title}
-                    artistName={item.teamName}
+                    artistName={item.artistName}
                     id={item.id}
                     delete={false}
                     index={index}
