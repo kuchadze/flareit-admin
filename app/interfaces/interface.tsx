@@ -34,5 +34,12 @@ export interface Users {
     email: string;
     password: string;
     imgUrl: string;
-  
-  
+}
+
+export interface Music {
+    title: string;
+    artistName: string;
+    id: number;
+    coverImgUrl: string;
+    audioUrl: string;
+}
