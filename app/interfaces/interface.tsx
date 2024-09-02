@@ -32,3 +32,11 @@ export interface Album {
     artistName: string;
     coverImgUrl: string;
 }
+
+export interface Music {
+    title: string;
+    artistName: string;
+    id: number;
+    coverImgUrl: string;
+    audioUrl: string;
+}

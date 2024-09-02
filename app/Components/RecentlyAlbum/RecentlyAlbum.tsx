@@ -8,7 +8,7 @@ const RecentlyAlbum = () => {
 
     useEffect(() => {
         axios
-            .get('https://enigma-wtuc.onrender.com/albums')
+            .get('https://enigma-wtuc.onrender.com/albums/recent')
             .then((res) => {
                 setAlbums(res.data);
             })
