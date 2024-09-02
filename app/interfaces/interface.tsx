@@ -10,12 +10,8 @@ export interface FormValues {
     albumReleaseDate: string;
     albumArtistName: string;
     albumPicture: File | null;
-}
-
-export interface User {
-    key: string;
-    email: string;
-    addedDate: string;
+    password: string;
+    confirmPassword: string;
 }
 
 export interface Playlist {
@@ -33,10 +29,10 @@ export interface Album {
     coverImgUrl: string;
 }
 
-export interface Music {
-    title: string;
-    artistName: string;
+export interface Users {
     id: number;
-    coverImgUrl: string;
-    audioUrl: string;
-}
+    email: string;
+    password: string;
+    imgUrl: string;
+  
+  

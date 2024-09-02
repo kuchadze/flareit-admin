@@ -4,7 +4,7 @@ import styles from './Input.module.scss';
 
 interface Props {
     placeholder: string;
-    register: UseFormRegisterReturn;
+    register?: UseFormRegisterReturn;
 }
 
 const Input = (props: Props) => {

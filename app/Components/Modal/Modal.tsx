@@ -25,7 +25,6 @@ const Modal = (props: Props) => {
         if (props.onDone) {
             props.onDone();
         }
-        onClose();
     };
 
     return (

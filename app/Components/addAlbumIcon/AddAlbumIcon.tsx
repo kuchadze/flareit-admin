@@ -1,4 +1,4 @@
-import styles from './iconsButton.module.scss';
+import styles from './AddAlbumIcon.module.scss';
 import { useRef, useState } from 'react';
 import AddAlbum from '../AddAlbum/AddAlbum';
 import Modal from '../Modal/Modal';
@@ -8,7 +8,7 @@ interface Props {
     id?: number;
 }
 
-const IconButton = (props: Props) => {
+const AddAlbumIcon = (props: Props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const addArtistRef = useRef<{ submitForm: () => void }>(null);
 
@@ -46,4 +46,4 @@ const IconButton = (props: Props) => {
     );
 };
 
-export default IconButton;
+export default AddAlbumIcon;
