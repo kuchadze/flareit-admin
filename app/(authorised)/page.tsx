@@ -14,13 +14,13 @@ export default function Home() {
                 </div>
             </div>
             <div className={styles.sectionHeader}>
-                <p className={styles.musicContainer}>Recently added artist</p>
+                <p className={styles.musicContainer}>Recently added artists</p>
                 <div className={styles.artistContainer}>
                     <RecentlyArtist />
                 </div>
             </div>
             <div className={styles.sectionHeader}>
-                <p className={styles.musicContainer}>Recently added Album</p>
+                <p className={styles.musicContainer}>Recently added Albums</p>
                 <div className={styles.albumContainer}>
                     <RecentlyAlbum />
                 </div>
