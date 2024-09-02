@@ -3,11 +3,11 @@
 import { Table } from 'antd';
 import styles from './PlaylistsTable.module.scss';
 import PlaylistInfo from '../PlaylistInfo/PlaylistInfo';
-import IconButton from '../IconButton/IconButton';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DeleteBox from '../DeleteBox/DeleteBox';
+import { useParams } from 'next/navigation';
 
 interface Playlist {
     id: number;
@@ -19,14 +19,15 @@ interface Playlist {
 const PlaylistsTable = () => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
-
+    const param = useParams();
+    const id = param.id;
     useEffect(() => {
         const fetchPlaylists = async () => {
             try {
                 const result = await axios.get(
-                    'https://enigma-wtuc.onrender.com/playlists',
+                    `https://enigma-wtuc.onrender.com/users/${id}`,
                 );
-                setPlaylists(result.data);
+                setPlaylists(result.data.playlists);
             } catch (error) {
                 alert('Error fetching playlists');
             }
@@ -37,9 +38,7 @@ const PlaylistsTable = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await axios.delete(
-                `https://enigma-wtuc.onrender.com/playlists/${id}`,
-            );
+            await axios.delete(`https://enigma-wtuc.onrender.com/users/${id}`);
             setPlaylists((prevPlaylists) =>
                 prevPlaylists.filter((playlist) => playlist.id !== id),
             );
@@ -76,7 +75,6 @@ const PlaylistsTable = () => {
             width: '100px',
             render: (text: string, record: Playlist) => (
                 <div className={styles.buttons}>
-                    <IconButton src={'/icons/iconButton/editButton.svg'} />
                     <DeleteBox
                         id={record.id}
                         delete={true}

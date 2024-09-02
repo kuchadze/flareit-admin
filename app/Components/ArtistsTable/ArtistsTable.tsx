@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import ArtistInfo from '../ArtistInfo/ArtistInfo';
-import IconButton from '../IconButton/IconButton';
 import styles from '@/app/Components/ArtistsTable/ArtistsTable.module.scss';
 import axios from 'axios';
 import { format } from 'date-fns';
 import DeleteBox from '../DeleteBox/DeleteBox';
+import AddAlbumIcon from '../addAlbumIcon/AddAlbumIcon';
 
 interface Artist {
     coverImgUrl: string;
@@ -86,7 +86,7 @@ const ArtistsTable = () => {
             render: (_: string, record: Artist) => (
                 <div className={styles.buttons}>
                     <div>
-                        <IconButton
+                        <AddAlbumIcon
                             src={'/icons/iconButton/addAlbum.svg'}
                             id={record.id}
                         />
