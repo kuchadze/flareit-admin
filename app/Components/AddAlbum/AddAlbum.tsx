@@ -110,7 +110,7 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddAlbumProps>(
                             htmlFor="albumPicture"
                             className={styles.customButton}
                         >
-                            <img src="/images/image.svg" alt="Upload icon" />
+                            <img src="/images/Image.svg" alt="Upload icon" />
                             <p>{fileName || 'Upload album cover'}</p>
                         </label>
                     </div>

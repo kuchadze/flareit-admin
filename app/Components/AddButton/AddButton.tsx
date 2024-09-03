@@ -8,7 +8,7 @@ interface Props {
 const AddButton = (props: Props) => {
     return (
         <div className={styles.addButton} onClick={props.onClick}>
-            <img src="/images/addMusicIcon.svg" />
+            <img src="/images/AddMusicIcon.svg" />
             <p className={styles.color}>{props.text}</p>
         </div>
     );
