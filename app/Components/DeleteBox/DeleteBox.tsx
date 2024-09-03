@@ -18,7 +18,7 @@ const DeleteBox = (props: Props) => {
             <img
                 className={props.delete ? styles.deleteIcon : styles.none}
                 key={props.id}
-                src="/images/delete.svg"
+                src="/images/Delete.svg"
                 alt="Delete"
                 style={{
                     width: props.width,
