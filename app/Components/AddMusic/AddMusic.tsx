@@ -11,10 +11,11 @@ interface AddMusicProps {
 }
 
 export interface FormValues {
-    musicTitle: string;
-    musicPicture: FileList | null;
+    title: string;
+    picture: FileList | null;
     url: FileList | null;
     artistName: string;
+    albumId: number;
 }
 
 const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
@@ -28,18 +29,19 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();
-            formData.append('musicTitle', values.musicTitle);
+            formData.append('title', values.title);
             formData.append('artistName', values.artistName);
+            formData.append('albumId', String(id));
 
-            if (values.musicPicture && values.musicPicture.length > 0) {
-                formData.append('musicPicture', values.musicPicture[0]);
+            if (values.picture && values.picture.length > 0) {
+                formData.append('picture', values.picture[0]);
             }
             if (values.url && values.url.length > 0) {
                 formData.append('audio', values.url[0]);
             }
             try {
-                await axios.patch(
-                    `https://enigma-wtuc.onrender.com/albums/${id}`,
+                await axios.post(
+                    'https://enigma-wtuc.onrender.com/musics',
                     formData,
                     {
                         headers: {
@@ -50,6 +52,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                 alert('Music added successfully');
             } catch (error) {
                 alert('Error submitting form');
+                console.log(error);
             }
 
             if (onDone) {
@@ -75,7 +78,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
         ) => {
             if (event.target.files && event.target.files.length > 0) {
                 setCoverImgFileName(event.target.files[0].name);
-                setValue('musicPicture', event.target.files);
+                setValue('picture', event.target.files);
             }
         };
 
@@ -89,7 +92,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                         <p className={styles.color}>Name</p>
                         <Input
                             register={{
-                                ...register('musicTitle', {
+                                ...register('title', {
                                     required: true,
                                     minLength: 1,
                                 }),
