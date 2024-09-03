@@ -6,7 +6,7 @@ import styles from '@/app/Components/ArtistsTable/ArtistsTable.module.scss';
 import axios from 'axios';
 import { format } from 'date-fns';
 import DeleteBox from '../DeleteBox/DeleteBox';
-import AddAlbumIcon from '../addAlbumIcon/AddAlbumIcon';
+import AddAlbumIcon from '../AddAlbumIcon/AddAlbumIcon';
 
 interface Artist {
     coverImgUrl: string;

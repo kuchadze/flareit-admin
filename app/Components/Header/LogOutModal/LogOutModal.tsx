@@ -25,7 +25,7 @@ const LogOutModal = (props: Props) => {
                             </div>
                             <div className={styles.logOut}>
                                 <img
-                                    src="/lmages/LogOut.svg"
+                                    src="/images/LogOut.svg"
                                     alt="LogOutIcon"
                                 />
                                 <span className={styles.color}>Log Out</span>
