@@ -6,7 +6,6 @@ import styles from '@/app/Components/ArtistsTable/ArtistsTable.module.scss';
 import axios from 'axios';
 import { format } from 'date-fns';
 import DeleteBox from '../DeleteBox/DeleteBox';
-import AddAlbumIcon from '../AddAlbumIcon/AddAlbumIcon';
 
 interface Artist {
     coverImgUrl: string;
@@ -85,12 +84,6 @@ const ArtistsTable = () => {
             key: 'buttons',
             render: (_: string, record: Artist) => (
                 <div className={styles.buttons}>
-                    <div>
-                        <AddAlbumIcon
-                            src={'/icons/iconButton/addAlbum.svg'}
-                            id={record.id}
-                        />
-                    </div>
                     <DeleteBox
                         id={record.id}
                         delete={true}
