@@ -6,7 +6,7 @@ import { FormValues } from '@/app/interfaces/interface';
 
 interface ChangePasswordProps {
     onSubmitStatus: (status: boolean) => void;
-    onPasswordLengthCheck: (isValid: boolean) => void; // Add this prop
+    onPasswordLengthCheck: (isValid: boolean) => void;
     id?: number;
 }
 
@@ -35,13 +35,13 @@ const ChangePassword = forwardRef<
                     `https://enigma-wtuc.onrender.com/users/${id}`,
                     values,
                 );
-                onSubmitStatus(true); // Notify parent of successful submission
+                onSubmitStatus(true);
             } catch (error) {
                 setFormError('Error updating password');
-                onSubmitStatus(false); // Notify parent of failure
+                onSubmitStatus(false);
             }
         } else {
-            onSubmitStatus(false); // Notify parent of validation errors
+            onSubmitStatus(false);
         }
     };
 
@@ -49,12 +49,12 @@ const ChangePassword = forwardRef<
         submitForm: () => {
             const result = handleSubmit(onRegister)();
             const password = getValues('password');
-            // Check if password length is at least 8 characters
             const isPasswordLengthValid = password.length >= 8;
             onPasswordLengthCheck(isPasswordLengthValid);
             if (!result) {
-                onSubmitStatus(false); // Notify parent of validation errors
+                onSubmitStatus(true);
             }
+            return result;
         },
     }));
 

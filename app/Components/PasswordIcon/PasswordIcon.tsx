@@ -7,11 +7,12 @@ interface Props {
     id: number;
 }
 
-const PasswordIcon: React.FC<Props> = ({ id }) => {
+const PasswordIcon = (props: Props) => {
     const [modals, setModals] = useState<boolean>(false);
-    const [isFormValid, setIsFormValid] = useState<boolean>(true); // Track form submission status
+    const [isFormValid, setIsFormValid] = useState<boolean>(true);
     const [passwordLengthValid, setPasswordLengthValid] =
-        useState<boolean>(true); // Track password length validity
+        useState<boolean>(true);
+    const [, setValidationError] = useState<string | null>(null);
     const addMusicRef = useRef<{ submitForm: () => void }>(null);
 
     const handleModalDone = () => {
@@ -19,14 +20,13 @@ const PasswordIcon: React.FC<Props> = ({ id }) => {
             addMusicRef.current.submitForm();
         }
 
-        // Check if the password length is valid
-        if (passwordLengthValid && isFormValid) {
-            setModals(false);
-        } else {
-            // Optionally, show a specific message to the user
+        if (!passwordLengthValid || !isFormValid) {
             alert(
-                'Please ensure all fields are valid and the password is at least 8 characters long.',
+                'Please ensure all fields are valid and the password is at least 8 characters long',
             );
+        } else {
+            setModals(false);
+            setValidationError(null);
         }
     };
 
@@ -58,9 +58,9 @@ const PasswordIcon: React.FC<Props> = ({ id }) => {
             >
                 <ChangePassword
                     ref={addMusicRef}
-                    id={id}
+                    id={props.id}
                     onSubmitStatus={handleSubmitStatus}
-                    onPasswordLengthCheck={handlePasswordLengthCheck} // Add this prop
+                    onPasswordLengthCheck={handlePasswordLengthCheck}
                 />
             </Modal>
         </>
