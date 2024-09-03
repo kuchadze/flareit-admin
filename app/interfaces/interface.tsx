@@ -1,15 +1,13 @@
 export interface FormValues {
+    id: number;
     artistName: string;
     lastName: string;
-    releaseDate: number;
+    releaseDate: string;
     biography: string;
     coverImgUrl: File | null;
     albumTitle: string;
     title: string;
     audio: File | null;
-    albumReleaseDate: string;
-    albumArtistName: string;
-    albumPicture: File | null;
     password: string;
     confirmPassword: string;
 }
