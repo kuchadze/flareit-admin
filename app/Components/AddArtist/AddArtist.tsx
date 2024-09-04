@@ -81,16 +81,6 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                                 placeholder="Artist Name"
                             />
                         </div>
-                        <div className={styles.inputGroup}>
-                            <p className={styles.color}>Last Name</p>
-                            <Input
-                                register={register('lastName', {
-                                    required: true,
-                                    minLength: 1,
-                                })}
-                                placeholder="Artist Last Name"
-                            />
-                        </div>
                     </div>
                     <div className={styles.inputGroup}>
                         <p className={styles.color}>Year</p>
