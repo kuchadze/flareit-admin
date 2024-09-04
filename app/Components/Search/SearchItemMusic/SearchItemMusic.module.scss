@@ -1,14 +1,20 @@
-@import "../../../styles/colors.scss";
-
+@import '../../../styles/colors.scss';
 
 .searchAndMapText {
     color: $PrimaryWhite;
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
     line-height: normal;
 }
 
+.searchAndMapText2 {
+    color: $PrimaryWhite;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
 
 .mapContainer {
     display: flex;
@@ -18,14 +24,16 @@
     align-items: center;
 }
 
-
 .round {
     border-radius: 24px;
 }
 
-
-.square{
+.square {
     border-radius: 4px;
 }
 
-
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
