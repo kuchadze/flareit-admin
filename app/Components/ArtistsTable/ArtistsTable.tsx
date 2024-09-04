@@ -55,7 +55,7 @@ const ArtistsTable = () => {
         format(new Date(dateString), 'dd.MM.yyyy');
     const columns = [
         {
-            title: 'Name, Surname',
+            title: 'Name',
             key: 'name',
             render: (_: string, record: Artist) => (
                 <ArtistInfo
