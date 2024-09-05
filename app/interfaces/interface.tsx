@@ -31,7 +31,6 @@ export interface Users {
     id: number;
     email: string;
     password: string;
-    imgUrl: string;
 }
 
 export interface Music {
@@ -40,4 +39,13 @@ export interface Music {
     id: number;
     coverImgUrl: string;
     audioUrl: string;
+}
+
+export interface AuthInputs {
+    email: string;
+    password: string;
+}
+
+export interface Response {
+    access_token: string;
 }

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import styles from './LogOutModal.module.scss';
 
 interface Props {
@@ -7,6 +8,13 @@ interface Props {
 }
 
 const LogOutModal = (props: Props) => {
+    const router = useRouter();
+
+    const handleLogout = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        localStorage.removeItem('token');
+        router.push('/auth');
+    };
     return (
         <>
             {props.logOut ? (
@@ -23,7 +31,10 @@ const LogOutModal = (props: Props) => {
                                     {props.email}
                                 </span>
                             </div>
-                            <div className={styles.logOut}>
+                            <div
+                                className={styles.logOut}
+                                onClick={handleLogout}
+                            >
                                 <img
                                     src="/images/LogOut.svg"
                                     alt="LogOutIcon"

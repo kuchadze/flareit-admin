@@ -13,6 +13,7 @@ import PasswordIcon from '../PasswordIcon/PasswordIcon';
 
 const UserManagementTable = () => {
     const [users, setUsers] = useState<Users[]>([]);
+    console.log(users);
 
     useEffect(() => {
         axios
