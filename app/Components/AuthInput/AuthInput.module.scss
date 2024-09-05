@@ -1,0 +1,80 @@
+@import '../../styles/colors.scss';
+
+.input {
+    border: none;
+    outline: none;
+    width: 100%;
+    caret-color: $PrimaryWhite;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    background: transparent;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+    }
+
+    &:focus::placeholder {
+        color: #4d4d4d;
+        transition: color 0.3s ease;
+    }
+}
+
+.input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #151515 inset;
+    -webkit-text-fill-color: white;
+}
+
+.input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #151515 inset;
+    -webkit-text-fill-color: white;
+}
+
+.input:-webkit-autofill:hover {
+    -webkit-box-shadow: 0 0 0px 1000px #151515 inset;
+    -webkit-text-fill-color: white;
+}
+
+.input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #151515 inset;
+    -webkit-text-fill-color: white;
+}
+
+.inputWrapper {
+    width: 100%;
+    max-height: 41px;
+    border-radius: 8px;
+    background-color: #151515;
+    padding: 12px 16px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+
+    &:focus {
+        background-color: #0c0c0c;
+    }
+}
+
+.error {
+    border: 2px solid #961e18;
+}
+
+.btn {
+    width: 50px;
+    height: 20px;
+}
+
+.errorText {
+    color: #961e18;
+    font-size: 14px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
