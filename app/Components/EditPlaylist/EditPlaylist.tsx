@@ -2,7 +2,6 @@ import styles from './EditPlaylist.module.scss';
 import { forwardRef, useImperativeHandle } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useParams } from 'next/navigation';
 
 interface AddMusicProps {
     onDone?: () => void;
