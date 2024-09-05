@@ -13,6 +13,7 @@ interface AddArtistProps {
 const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
     ({ onDone }, ref) => {
         const [fileName, setFileName] = useState<string>('');
+        const token = localStorage.getItem('token');
         const {
             handleSubmit,
             register,
@@ -38,6 +39,7 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data',
+                            Authorization: `Bearer ${token}`,
                         },
                     },
                 );

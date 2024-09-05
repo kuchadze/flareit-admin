@@ -8,39 +8,55 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DeleteBox from '../DeleteBox/DeleteBox';
 import { useParams } from 'next/navigation';
+import EditIcon from '../EditIcon/EditIcon';
 
 interface Playlist {
     id: number;
-    name: string;
-    songs: number;
+    title: string;
     imageSrc: string;
 }
 
 const PlaylistsTable = () => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
-    const param = useParams();
-    const id = param.id;
+    const token = localStorage.getItem('token');
+    const params = useParams();
+    const id = params.id;
+
     useEffect(() => {
         const fetchPlaylists = async () => {
             try {
-                const result = await axios.get(
+                const response = await axios.get(
                     `https://enigma-wtuc.onrender.com/users/${id}`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
                 );
-                setPlaylists(result.data.playlists);
+                setPlaylists(response.data.playlists);
             } catch (error) {
                 alert('Error fetching playlists');
             }
         };
 
         fetchPlaylists();
-    }, []);
+    }, [id, token, playlists]);
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (playlistId: number) => {
         try {
-            await axios.delete(`https://enigma-wtuc.onrender.com/users/${id}`);
+            await axios.delete(
+                `https://enigma-wtuc.onrender.com/playlists/${playlistId}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
             setPlaylists((prevPlaylists) =>
-                prevPlaylists.filter((playlist) => playlist.id !== id),
+                prevPlaylists.filter((playlist) => playlist.id !== playlistId),
             );
         } catch (error) {
             alert('Error deleting playlist');
@@ -51,14 +67,14 @@ const PlaylistsTable = () => {
 
     const columns: ColumnsType<Playlist> = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
             width: '40%',
-            render: (name: string, record: Playlist) => (
+            render: (title: string, record: Playlist) => (
                 <PlaylistInfo
                     image={record.imageSrc || '/images/playlistImage.png'}
-                    playlistName={name}
+                    title={record.title}
                 />
             ),
         },
@@ -66,6 +82,7 @@ const PlaylistsTable = () => {
             title: 'Songs',
             dataIndex: 'songs',
             key: 'songs',
+            render: (text: string) => text || 'No songs available',
         },
         {
             title: '',
@@ -75,6 +92,7 @@ const PlaylistsTable = () => {
             width: '100px',
             render: (text: string, record: Playlist) => (
                 <div className={styles.buttons}>
+                    <EditIcon id={record.id} value={record.title} />
                     <DeleteBox
                         id={record.id}
                         delete={true}

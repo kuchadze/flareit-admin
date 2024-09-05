@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 interface Props {
     image: string;
-    playlistName: string;
+    title: string;
 }
 
 const PlaylistInfo = (props: Props) => {
@@ -15,7 +15,7 @@ const PlaylistInfo = (props: Props) => {
                 height={40}
                 alt="Playlist Photo"
             />
-            <span className={styles.playlistName}>{props.playlistName}</span>
+            <span className={styles.playlistName}>{props.title}</span>
         </div>
     );
 };
