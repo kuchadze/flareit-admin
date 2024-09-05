@@ -13,11 +13,16 @@ import PasswordIcon from '../PasswordIcon/PasswordIcon';
 
 const UserManagementTable = () => {
     const [users, setUsers] = useState<Users[]>([]);
-    console.log(users);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         axios
-            .get('https://enigma-wtuc.onrender.com/users')
+            .get('https://enigma-wtuc.onrender.com/users', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((res) => {
                 setUsers(res.data);
             })
