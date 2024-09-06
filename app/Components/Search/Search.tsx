@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './Search.module.scss';
 import axios from 'axios';
 import SearchItemAuthor from './SearchItemAuthor/SearchItemAuthor';
@@ -8,111 +8,104 @@ import SearchItemMusic from './SearchItemMusic/SearchItemMusic';
 import SearchItemAlbum from './SearchItemAlbum/SearchItemAlbum';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-
-interface ItemData {
-    id: number;
-    title?: string;
-    coverImgUrl: string;
-    artistName: string;
-    lastName?: string;
-    biography?: string;
-    releaseDate?: string;
-    audioUrl?: string;
-    createdAt?: string;
-    deletedAt?: string | null;
-    playCount?: number;
-    updatedAt?: string;
-}
-
-interface Item {
-    data: ItemData;
-    type: 'author' | 'music' | 'album';
-}
+import { Item } from '../../interfaces/searchInterfaces';
+import { useDebounce } from '../../helpers/useDebounce';
+import { processAndSortSearchResults } from '../../helpers/processSearchResults';
+import { SearchTypeEnum } from '../../enums/searchTypes.enum';
 
 const Search = () => {
     const [searchResults, setSearchResults] = useState<Item[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const searchRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
-
-    const handleSearch = async () => {
-        if (searchTerm.trim() === '') {
-            setSearchResults([]);
-            return;
-        }
-        try {
-            const response = await axios.get(
-                'https://enigma-wtuc.onrender.com/search',
-                {
-                    params: { searchField: searchTerm },
-                },
-            );
-            setSearchResults(response.data);
-        } catch (error) {
-            console.error('Error during search', error);
-        }
-    };
+    const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                searchRef.current &&
+                !searchRef.current.contains(event.target as Node)
+            ) {
+                setSearchTerm('');
+                setSearchResults([]);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
+
+    useEffect(() => {
+        const handleSearch = async () => {
+            if (!debouncedSearchTerm.trim()) {
+                setSearchResults([]);
+                return;
+            }
+
+            try {
+                setSearchResults([]);
+
+                const { data } = await axios.get(
+                    'https://enigma-wtuc.onrender.com/search',
+                    {
+                        params: { searchField: debouncedSearchTerm },
+                    },
+                );
+
+                const sortedResults = processAndSortSearchResults(data);
+                setSearchResults(sortedResults);
+            } catch (error) {
+                console.error('Error during search', error);
+            }
+        };
+
         handleSearch();
-    }, [searchTerm]);
+    }, [debouncedSearchTerm, pathname]);
 
-    useEffect(() => {
-        setSearchTerm('');
-        setSearchResults([]);
-    }, [pathname]);
+    const handleItemClick = () => setSearchTerm('');
 
-    const handleItemClick = () => {
-        setSearchTerm('');
-    };
+    const renderItemsByType = () => (
+        <div className={styles.dataContainer}>
+            {searchResults.map(({ data, type }) => {
+                const commonProps = {
+                    id: data.id,
+                    artistName: data.artistName,
+                    coverImgUrl: data.coverImgUrl,
+                    onClick: handleItemClick,
+                };
 
-    const renderItemsByType = () => {
-        return (
-            <div className={styles.dataContainer}>
-                {searchResults.map((item) => {
-                    const { data, type } = item;
-                    switch (type) {
-                        case 'author':
-                            return (
-                                <SearchItemAuthor
-                                    key={data.id}
-                                    id={data.id}
-                                    artistName={data.artistName}
-                                    coverImgUrl={data.coverImgUrl}
-                                    onClick={handleItemClick}
-                                />
-                            );
-                        case 'music':
-                            return (
-                                <SearchItemMusic
-                                    id={data.id}
-                                    key={data.id}
-                                    title={data.title}
-                                    artistName={data.artistName}
-                                    coverImgUrl={data.coverImgUrl}
-                                    audioUrl={data.audioUrl}
-                                />
-                            );
-                        case 'album':
-                            return (
-                                <SearchItemAlbum
-                                    id={data.id}
-                                    key={data.id}
-                                    title={data.title}
-                                    artistName={data.artistName}
-                                    coverImgUrl={data.coverImgUrl}
-                                    onClick={handleItemClick}
-                                />
-                            );
-                        default:
-                            return null;
-                    }
-                })}
-            </div>
-        );
-    };
+                switch (type) {
+                    case SearchTypeEnum.Author:
+                        return (
+                            <SearchItemAuthor key={data.id} {...commonProps} />
+                        );
+                    case SearchTypeEnum.Music:
+                        return (
+                            <SearchItemMusic
+                                key={data.id}
+                                {...commonProps}
+                                title={data.title}
+                                audioUrl={data.audioUrl}
+                            />
+                        );
+                    case SearchTypeEnum.Album:
+                        return (
+                            <SearchItemAlbum
+                                key={data.id}
+                                {...commonProps}
+                                title={data.title}
+                            />
+                        );
+                    default:
+                        return null;
+                }
+            })}
+        </div>
+    );
 
     return (
-        <div className={styles.searchAndMap}>
+        <div className={styles.searchAndMap} ref={searchRef}>
             <div className={styles.searchInputContainer}>
                 <div className={styles.inputContainer}>
                     <Image
