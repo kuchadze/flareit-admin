@@ -1,5 +1,4 @@
-@import "../../styles/colors.scss";
-
+@import '../../styles/colors.scss';
 
 .searchInputContainer {
     max-width: 434px;
@@ -11,7 +10,13 @@
     background-color: $PrimaryBlackTone3;
     gap: 8px;
     flex-direction: column;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
+.searchInputContainer::-webkit-scrollbar {
+    display: none;
 }
 
 .inputContainer {
@@ -56,23 +61,4 @@
 
 .saerchList {
     color: $PrimaryWhite;
-}
-
-
-
-@media screen and (max-width: 449px) {
-    .input {
-        border: none;
-        background: none;
-        outline: none;
-        max-width: 288px;
-        max-height: 24px;
-        background-color: $PrimaryBlackTone3;
-        color: $PrimaryWhite;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-        z-index: 9999;
-    }
 }
