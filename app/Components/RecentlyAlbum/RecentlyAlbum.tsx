@@ -19,7 +19,7 @@ const RecentlyAlbum = () => {
 
     return (
         <>
-            {albums.map((item) => (
+            {albums.slice(0, 8).map((item) => (
                 <AlbumCard
                     key={item.id}
                     image={item.coverImgUrl}

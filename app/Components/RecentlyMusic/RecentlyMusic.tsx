@@ -15,11 +15,11 @@ const RecentlyMusic = () => {
             .catch((error) => {
                 alert(error);
             });
-    });
+    }, []);
 
     return (
         <>
-            {music.map((item, index) => (
+            {music.slice(0, 6).map((item, index) => (
                 <MusicCard
                     key={item.id}
                     image={item.coverImgUrl}

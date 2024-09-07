@@ -21,11 +21,11 @@ const RecentlyArtist = () => {
             .catch((error) => {
                 alert(error);
             });
-    });
+    }, []);
 
     return (
         <>
-            {artists.map((item) => (
+            {artists.slice(0, 8).map((item) => (
                 <ArtistCard
                     key={item.id}
                     image={item.coverImgUrl}
