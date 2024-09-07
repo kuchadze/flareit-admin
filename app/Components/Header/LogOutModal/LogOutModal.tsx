@@ -1,5 +1,8 @@
 import { useRouter } from 'next/navigation';
 import styles from './LogOutModal.module.scss';
+import { useEffect, useState } from 'react';
+import { email } from '@/app/interfaces/interface';
+import axios from 'axios';
 
 interface Props {
     email: string;
@@ -9,12 +12,28 @@ interface Props {
 
 const LogOutModal = (props: Props) => {
     const router = useRouter();
+    const [emailList, setEmailList] = useState<email>();
+    const token = localStorage.getItem('token');
 
     const handleLogout = (event: React.MouseEvent) => {
         event.stopPropagation();
         localStorage.removeItem('token');
         router.push('/auth');
     };
+    useEffect(() => {
+        if (token) {
+            axios
+                .get(`https://enigma-wtuc.onrender.com/users/me`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((res) => {
+                    setEmailList(res.data);
+                });
+        }
+    }, [token]);
     return (
         <>
             {props.logOut ? (
@@ -27,9 +46,11 @@ const LogOutModal = (props: Props) => {
                     <div className={styles.modalCont}>
                         <div className={styles.logOutModal}>
                             <div>
-                                <span className={styles.color}>
-                                    {props.email}
-                                </span>
+                                {emailList && (
+                                    <span className={styles.color}>
+                                        {emailList.email}
+                                    </span>
+                                )}
                             </div>
                             <div
                                 className={styles.logOut}

@@ -33,6 +33,10 @@ export interface Users {
     password: string;
 }
 
+export interface email {
+    email: string;
+}
+
 export interface Music {
     title: string;
     artistName: string;
