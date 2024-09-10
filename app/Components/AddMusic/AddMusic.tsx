@@ -106,7 +106,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                         />
                     </div>
                     <div className={styles.inputGroup}>
-                        <p className={styles.color}>artistName</p>
+                        <p className={styles.color}>Artist Name</p>
                         <Input
                             register={{
                                 ...register('artistName', {
@@ -114,7 +114,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                                     minLength: 1,
                                 }),
                             }}
-                            placeholder="ArtistName"
+                            placeholder="Artist Name"
                         />
                     </div>
                     <div className={styles.fileInputWrapper}>
