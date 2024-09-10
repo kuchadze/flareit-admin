@@ -26,3 +26,7 @@
 .input::-webkit-scrollbar {
     display: none;
 }
+
+.input::placeholder {
+    font-family: Inter;
+}
