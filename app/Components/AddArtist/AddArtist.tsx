@@ -13,13 +13,16 @@ interface AddArtistProps {
 const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
     ({ onDone }, ref) => {
         const [fileName, setFileName] = useState<string>('');
-        const token = localStorage.getItem('token');
         const {
             handleSubmit,
             register,
             formState: { errors },
             setValue,
         } = useForm<FormValues>();
+        const token = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('token='))
+            ?.split('=')[1];
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();

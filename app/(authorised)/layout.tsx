@@ -17,7 +17,10 @@ const Layout = (props: Props) => {
     );
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('token='))
+            ?.split('=')[1];
         if (!token) {
             router.replace('/auth');
         } else {

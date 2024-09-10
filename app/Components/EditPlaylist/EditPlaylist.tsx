@@ -17,7 +17,10 @@ export interface FormValues {
 const EditPlaylist = forwardRef<{ submitForm: () => void }, AddMusicProps>(
     ({ onDone, id, value }, ref) => {
         const { handleSubmit, register } = useForm<FormValues>();
-        const token = localStorage.getItem('token');
+        const token = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('token='))
+            ?.split('=')[1];
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             if (!values.title.trim()) {

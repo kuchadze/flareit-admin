@@ -29,6 +29,10 @@ const OneAlbumsById = () => {
     const addMusicRef = useRef<{ submitForm: () => void }>(null);
     const [musics, setMusics] = useState<Music[]>([]);
     const [album, setAlbum] = useState<Album | null>(null);
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
     const handleModalDone = () => {
         if (addMusicRef.current) {
@@ -42,7 +46,12 @@ const OneAlbumsById = () => {
     useEffect(() => {
         if (id) {
             axios
-                .get(`https://enigma-wtuc.onrender.com/albums/${id}`)
+                .get(`https://enigma-wtuc.onrender.com/albums/${id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
                 .then((res) => {
                     setAlbum(res.data);
                     setMusics(res.data.musics);

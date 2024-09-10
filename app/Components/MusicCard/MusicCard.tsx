@@ -15,11 +15,21 @@ interface Props {
 const MusicCard = (props: Props) => {
     const [showModal, setShowModal] = useState(false);
     const [isDeleted, setIsDeleted] = useState(false);
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
     const handleDelete = async () => {
         try {
             await axios.delete(
                 `https://enigma-wtuc.onrender.com/musics/${props.id}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
             );
             setIsDeleted(true);
         } catch (error) {

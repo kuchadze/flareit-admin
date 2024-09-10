@@ -19,7 +19,12 @@ interface Playlist {
 const PlaylistsTable = () => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
-    const token = localStorage.getItem('token');
+
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
+
     const params = useParams();
     const id = params.id;
 
@@ -37,12 +42,15 @@ const PlaylistsTable = () => {
                 );
                 setPlaylists(response.data.playlists);
             } catch (error) {
+                console.error('Error fetching playlists:', error);
                 alert('Error fetching playlists');
             }
         };
 
-        fetchPlaylists();
-    }, [id, token, playlists]);
+        if (id && token) {
+            fetchPlaylists();
+        }
+    }, []);
 
     const handleDelete = async (playlistId: number) => {
         try {
@@ -59,6 +67,7 @@ const PlaylistsTable = () => {
                 prevPlaylists.filter((playlist) => playlist.id !== playlistId),
             );
         } catch (error) {
+            console.error('Error deleting playlist:', error);
             alert('Error deleting playlist');
         } finally {
             setShowModal(null);

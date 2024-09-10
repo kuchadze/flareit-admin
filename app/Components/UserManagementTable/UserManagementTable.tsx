@@ -13,7 +13,10 @@ import PasswordIcon from '../PasswordIcon/PasswordIcon';
 
 const UserManagementTable = () => {
     const [users, setUsers] = useState<Users[]>([]);
-    const token = localStorage.getItem('token');
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
     useEffect(() => {
         axios
@@ -29,7 +32,7 @@ const UserManagementTable = () => {
             .catch((error) => {
                 console.error('Error fetching users:', error);
             });
-    }, []);
+    }, [token]);
     const formatDate = (dateString: string) =>
         format(new Date(dateString), 'dd.MM.yyyy');
     const columns: ColumnsType<Users> = [

@@ -8,6 +8,10 @@ interface Props {
 
 const BlockIcon = (props: Props) => {
     const [isBlocked, setIsBlocked] = useState<boolean | null>(null);
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
     const toggleBlockStatus = async () => {
         if (props.id !== undefined) {
@@ -15,11 +19,27 @@ const BlockIcon = (props: Props) => {
                 if (isBlocked) {
                     await axios.patch(
                         `https://enigma-wtuc.onrender.com/users/${props.id}/unblock`,
-                    );
+                        {},
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`,
+                            },
+                        },
+                    ),
+                        [token];
                 } else {
                     await axios.patch(
                         `https://enigma-wtuc.onrender.com/users/${props.id}/block`,
-                    );
+                        {},
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`,
+                            },
+                        },
+                    ),
+                        [token];
                 }
                 setIsBlocked((prev) => !prev);
             } catch (error) {
@@ -31,7 +51,12 @@ const BlockIcon = (props: Props) => {
     useEffect(() => {
         if (props.id !== undefined) {
             axios
-                .get(`https://enigma-wtuc.onrender.com/users/${props.id}`)
+                .get(`https://enigma-wtuc.onrender.com/users/${props.id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
                 .then((res) => {
                     setIsBlocked(res.data.blocked);
                 })

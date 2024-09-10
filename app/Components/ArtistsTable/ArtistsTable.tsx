@@ -20,12 +20,22 @@ interface Artist {
 const ArtistsTable = () => {
     const [artists, setArtists] = useState<Artist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
     useEffect(() => {
         const fetchArtists = async () => {
             try {
                 const result = await axios.get(
                     'https://enigma-wtuc.onrender.com/authors',
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
                 );
                 setArtists(result.data);
             } catch (error) {
@@ -40,6 +50,12 @@ const ArtistsTable = () => {
         try {
             await axios.delete(
                 `https://enigma-wtuc.onrender.com/authors/${id}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
             );
             setArtists((prevArtists) =>
                 prevArtists.filter((artist) => artist.id !== id),

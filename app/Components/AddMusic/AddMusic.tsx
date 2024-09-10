@@ -22,6 +22,10 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
     ({ onDone }, ref) => {
         const [audioFileName, setAudioFileName] = useState('');
         const [coverImgFileName, setCoverImgFileName] = useState('');
+        const token = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('token='))
+            ?.split('=')[1];
 
         const { handleSubmit, register, setValue } = useForm<FormValues>();
         const params = useParams();
@@ -46,6 +50,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data',
+                            Authorization: `Bearer ${token}`,
                         },
                     },
                 );
