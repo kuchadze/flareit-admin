@@ -23,6 +23,10 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddAlbumProps>(
     ({ onDone, id }, ref) => {
         const [fileName, setFileName] = useState<string>('');
         const { handleSubmit, register, setValue } = useForm<FormValues>();
+        const token = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('token='))
+            ?.split('=')[1];
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             const formData = new FormData();
@@ -42,6 +46,7 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddAlbumProps>(
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data',
+                            Authorization: `Bearer ${token}`,
                         },
                     },
                 );

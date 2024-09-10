@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import AuthInput from '../AuthInput/AuthInput';
 import { AuthInputs, Response } from '@/app/interfaces/interface';
+import { setCookie } from '@/app/helpers/cookies';
 
 const AuthForm = () => {
     const [fail, setFail] = useState<string>();
@@ -26,7 +27,7 @@ const AuthForm = () => {
                 const token = response.data.access_token;
 
                 if (token) {
-                    localStorage.setItem('token', token);
+                    setCookie('token', token, 60);
                     router.push('/');
                 }
             })

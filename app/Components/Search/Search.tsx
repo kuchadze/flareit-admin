@@ -19,6 +19,10 @@ const Search = () => {
     const searchRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -50,6 +54,11 @@ const Search = () => {
                     'https://enigma-wtuc.onrender.com/search',
                     {
                         params: { searchField: debouncedSearchTerm },
+
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
                     },
                 );
 

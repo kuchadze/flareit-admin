@@ -11,10 +11,19 @@ interface Artist {
 
 const RecentlyArtist = () => {
     const [artists, setArtists] = useState<Artist[]>([]);
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
     useEffect(() => {
         axios
-            .get('https://enigma-wtuc.onrender.com/authors/recent')
+            .get('https://enigma-wtuc.onrender.com/authors/recent', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then((result) => {
                 setArtists(result.data);
             })

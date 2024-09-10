@@ -25,6 +25,10 @@ const ChangePassword = forwardRef<
     } = useForm<FormValues>({
         mode: 'onBlur',
     });
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
     const [formError, setFormError] = useState<string | null>(null);
 
@@ -34,6 +38,12 @@ const ChangePassword = forwardRef<
                 await axios.patch(
                     `https://enigma-wtuc.onrender.com/users/${id}`,
                     values,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
                 );
                 onSubmitStatus(true);
             } catch (error) {
