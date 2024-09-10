@@ -2,8 +2,8 @@ import { useRouter } from 'next/navigation';
 import styles from './LogOutModal.module.scss';
 import { useEffect, useState } from 'react';
 import { email } from '@/app/interfaces/interface';
-import axios from 'axios';
 import Cookies from 'js-cookie';
+import apiInstance from '@/app/ApiInstance';
 
 interface Props {
     email: string;
@@ -14,18 +14,18 @@ interface Props {
 const LogOutModal = (props: Props) => {
     const router = useRouter();
     const [emailList, setEmailList] = useState<email | null>(null);
-    const token = Cookies.get('token'); // Get token using js-cookie
+    const token = Cookies.get('token');
 
     const handleLogout = async (event: React.MouseEvent) => {
         event.stopPropagation();
-        Cookies.remove('token'); // Remove token using js-cookie
-        await router.push('/auth'); // Redirect after removing token
+        Cookies.remove('token');
+        await router.push('/auth');
     };
 
     useEffect(() => {
         if (token) {
-            axios
-                .get('https://enigma-wtuc.onrender.com/users/me', {
+            apiInstance
+                .get('/users/me', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`,

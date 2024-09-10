@@ -1,6 +1,6 @@
-import axios from 'axios';
 import styles from './BlockIcon.module.scss';
 import { useEffect, useState } from 'react';
+import apiInstance from '@/app/ApiInstance';
 
 interface Props {
     id?: number;
@@ -8,38 +8,15 @@ interface Props {
 
 const BlockIcon = (props: Props) => {
     const [isBlocked, setIsBlocked] = useState<boolean | null>(null);
-    const token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('token='))
-        ?.split('=')[1];
 
     const toggleBlockStatus = async () => {
         if (props.id !== undefined) {
             try {
                 if (isBlocked) {
-                    await axios.patch(
-                        `https://enigma-wtuc.onrender.com/users/${props.id}/unblock`,
-                        {},
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`,
-                            },
-                        },
-                    ),
-                        [token];
+                    await apiInstance.patch(`/users/${props.id}/unblock`, {}),
+                        [];
                 } else {
-                    await axios.patch(
-                        `https://enigma-wtuc.onrender.com/users/${props.id}/block`,
-                        {},
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`,
-                            },
-                        },
-                    ),
-                        [token];
+                    await apiInstance.patch(`/users/${props.id}/block`, {}), [];
                 }
                 setIsBlocked((prev) => !prev);
             } catch (error) {
@@ -50,13 +27,8 @@ const BlockIcon = (props: Props) => {
 
     useEffect(() => {
         if (props.id !== undefined) {
-            axios
-                .get(`https://enigma-wtuc.onrender.com/users/${props.id}`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
+            apiInstance
+                .get(`/users/${props.id}`)
                 .then((res) => {
                     setIsBlocked(res.data.blocked);
                 })

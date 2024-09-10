@@ -5,10 +5,10 @@ import styles from './PlaylistsTable.module.scss';
 import PlaylistInfo from '../PlaylistInfo/PlaylistInfo';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import DeleteBox from '../DeleteBox/DeleteBox';
 import { useParams } from 'next/navigation';
 import EditIcon from '../EditIcon/EditIcon';
+import apiInstance from '@/app/ApiInstance';
 
 interface Playlist {
     id: number;
@@ -20,26 +20,13 @@ const PlaylistsTable = () => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
 
-    const token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('token='))
-        ?.split('=')[1];
-
     const params = useParams();
     const id = params.id;
 
     useEffect(() => {
         const fetchPlaylists = async () => {
             try {
-                const response = await axios.get(
-                    `https://enigma-wtuc.onrender.com/users/${id}`,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    },
-                );
+                const response = await apiInstance.get(`/users/${id}`);
                 setPlaylists(response.data.playlists);
             } catch (error) {
                 console.error('Error fetching playlists:', error);
@@ -47,22 +34,14 @@ const PlaylistsTable = () => {
             }
         };
 
-        if (id && token) {
+        if (id) {
             fetchPlaylists();
         }
     }, []);
 
     const handleDelete = async (playlistId: number) => {
         try {
-            await axios.delete(
-                `https://enigma-wtuc.onrender.com/playlists/${playlistId}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
-            );
+            await apiInstance.delete(`/playlists/${playlistId}`);
             setPlaylists((prevPlaylists) =>
                 prevPlaylists.filter((playlist) => playlist.id !== playlistId),
             );

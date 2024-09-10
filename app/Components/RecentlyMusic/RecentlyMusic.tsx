@@ -1,23 +1,14 @@
 import { useEffect, useState } from 'react';
 import MusicCard from '../MusicCard/MusicCard';
-import axios from 'axios';
 import { Music } from '@/app/interfaces/interface';
+import apiInstance from '@/app/ApiInstance';
 
 const RecentlyMusic = () => {
     const [music, setMusic] = useState<Music[]>([]);
-    const token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('token='))
-        ?.split('=')[1];
 
     useEffect(() => {
-        axios
-            .get('https://enigma-wtuc.onrender.com/musics/recent', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+        apiInstance
+            .get('/musics/recent')
             .then((result) => {
                 setMusic(result.data);
             })

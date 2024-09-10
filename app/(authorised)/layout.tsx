@@ -4,8 +4,8 @@ import styles from './layout.module.scss';
 import Navigation from '../Components/Navigation/Navigation';
 import Header from '../Components/Header/Header';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import LoadingSpinner from '../Components/LoadingSppiner/LoadingSppiner';
+import apiInstance from '../ApiInstance';
 
 interface Props {
     children: ReactNode;
@@ -25,13 +25,8 @@ const Layout = (props: Props) => {
             ?.split('=')[1];
 
         if (token) {
-            axios
-                .get('https://enigma-wtuc.onrender.com/users/me', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
+            apiInstance
+                .get('/users/me')
                 .then((result) => {
                     setIsAdmin(result.data.isAdmin);
                     setIsAuthenticated(true);
@@ -47,9 +42,7 @@ const Layout = (props: Props) => {
     }, [router]);
 
     useEffect(() => {
-        if (isAuthenticated === false) {
-            router.replace('/auth');
-        } else if (isAdmin === false) {
+        if (isAuthenticated === false || isAdmin === false) {
             router.replace('/auth');
         }
     }, [isAdmin, isAuthenticated, router]);

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Search.module.scss';
-import axios from 'axios';
 import SearchItemAuthor from './SearchItemAuthor/SearchItemAuthor';
 import SearchItemMusic from './SearchItemMusic/SearchItemMusic';
 import SearchItemAlbum from './SearchItemAlbum/SearchItemAlbum';
@@ -12,6 +11,7 @@ import { Item } from '../../interfaces/searchInterfaces';
 import { useDebounce } from '../../helpers/useDebounce';
 import { processAndSortSearchResults } from '../../helpers/processSearchResults';
 import { SearchTypeEnum } from '../../enums/searchTypes.enum';
+import apiInstance from '@/app/ApiInstance';
 
 const Search = () => {
     const [searchResults, setSearchResults] = useState<Item[]>([]);
@@ -19,10 +19,6 @@ const Search = () => {
     const searchRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
-    const token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('token='))
-        ?.split('=')[1];
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -50,17 +46,9 @@ const Search = () => {
             try {
                 setSearchResults([]);
 
-                const { data } = await axios.get(
-                    'https://enigma-wtuc.onrender.com/search',
-                    {
-                        params: { searchField: debouncedSearchTerm },
-
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    },
-                );
+                const { data } = await apiInstance.get('/search', {
+                    params: { searchField: debouncedSearchTerm },
+                });
 
                 const sortedResults = processAndSortSearchResults(data);
                 setSearchResults(sortedResults);

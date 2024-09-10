@@ -5,11 +5,11 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import BlockIcon from '../BlockIcon/BlockIcon';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Users } from '@/app/interfaces/interface';
 import TransitionPlayList from '../TransitionPlaylist/TransitionPlayList';
 import { format } from 'date-fns';
 import PasswordIcon from '../PasswordIcon/PasswordIcon';
+import apiInstance from '@/app/ApiInstance';
 
 const UserManagementTable = () => {
     const [users, setUsers] = useState<Users[]>([]);
@@ -19,13 +19,8 @@ const UserManagementTable = () => {
         ?.split('=')[1];
 
     useEffect(() => {
-        axios
-            .get('https://enigma-wtuc.onrender.com/users', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+        apiInstance
+            .get('/users')
             .then((res) => {
                 setUsers(res.data);
             })

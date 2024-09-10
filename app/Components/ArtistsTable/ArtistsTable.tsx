@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import ArtistInfo from '../ArtistInfo/ArtistInfo';
 import styles from '@/app/Components/ArtistsTable/ArtistsTable.module.scss';
-import axios from 'axios';
 import { format } from 'date-fns';
 import DeleteBox from '../DeleteBox/DeleteBox';
 import AddAlbumIcon from '../AddAlbumIcon/AddAlbumIcon';
+import apiInstance from '@/app/ApiInstance';
 
 interface Artist {
     coverImgUrl: string;
@@ -20,23 +20,11 @@ interface Artist {
 const ArtistsTable = () => {
     const [artists, setArtists] = useState<Artist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
-    const token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('token='))
-        ?.split('=')[1];
 
     useEffect(() => {
         const fetchArtists = async () => {
             try {
-                const result = await axios.get(
-                    'https://enigma-wtuc.onrender.com/authors',
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    },
-                );
+                const result = await apiInstance.get('/authors');
                 setArtists(result.data);
             } catch (error) {
                 alert('Error fetching artists');
@@ -48,14 +36,8 @@ const ArtistsTable = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await axios.delete(
+            await apiInstance.delete(
                 `https://enigma-wtuc.onrender.com/authors/${id}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
             );
             setArtists((prevArtists) =>
                 prevArtists.filter((artist) => artist.id !== id),
