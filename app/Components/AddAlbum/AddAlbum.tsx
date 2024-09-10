@@ -55,7 +55,7 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddAlbumProps>(
                     onDone();
                 }
             } catch (error) {
-                alert('Error uploading data');
+                console.log(error);
             }
         };
 

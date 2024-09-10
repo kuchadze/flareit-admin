@@ -32,8 +32,6 @@ const AuthForm = () => {
                 }
             })
             .catch((error: AxiosError) => {
-                console.error('Error sending data:', error);
-
                 if (error.message === 'Request failed with status code 401') {
                     setFail('Invalid email or password. Please try again.');
                 }

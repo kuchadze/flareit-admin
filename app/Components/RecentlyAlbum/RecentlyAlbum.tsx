@@ -22,7 +22,7 @@ const RecentlyAlbum = () => {
                 setAlbums(res.data);
             })
             .catch((err) => {
-                alert(err);
+                console.log(err);
             });
     }, []);
 

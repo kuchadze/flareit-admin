@@ -61,7 +61,7 @@ const BlockIcon = (props: Props) => {
                     setIsBlocked(res.data.blocked);
                 })
                 .catch((error) => {
-                    alert(error);
+                    console.log(error);
                 });
         }
     }, [props.id]);

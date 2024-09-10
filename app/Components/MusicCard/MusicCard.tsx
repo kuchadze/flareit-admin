@@ -33,7 +33,7 @@ const MusicCard = (props: Props) => {
             );
             setIsDeleted(true);
         } catch (error) {
-            alert(error);
+            console.log(error);
         } finally {
             setShowModal(false);
         }

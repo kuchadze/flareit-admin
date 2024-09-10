@@ -25,7 +25,7 @@ const Albums = () => {
                 setAlbums(res.data);
             })
             .catch((err) => {
-                alert(err);
+                console.log(err);
             });
     }, []);
     return (

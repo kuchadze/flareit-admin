@@ -21,8 +21,8 @@ const RecentlyMusic = () => {
             .then((result) => {
                 setMusic(result.data);
             })
-            .catch((error) => {
-                alert(error);
+            .catch(() => {
+                alert('you are not Admin');
             });
     }, []);
 

@@ -28,7 +28,7 @@ const RecentlyArtist = () => {
                 setArtists(result.data);
             })
             .catch((error) => {
-                alert(error);
+                console.log(error);
             });
     }, []);
 
