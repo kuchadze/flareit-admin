@@ -36,9 +36,7 @@ const ArtistsTable = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await apiInstance.delete(
-                `https://enigma-wtuc.onrender.com/authors/${id}`,
-            );
+            await apiInstance.delete(`/authors/${id}`);
             setArtists((prevArtists) =>
                 prevArtists.filter((artist) => artist.id !== id),
             );

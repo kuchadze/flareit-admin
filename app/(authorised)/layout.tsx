@@ -19,26 +19,16 @@ const Layout = (props: Props) => {
     );
 
     useEffect(() => {
-        const token = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith('token='))
-            ?.split('=')[1];
-
-        if (token) {
-            apiInstance
-                .get('/users/me')
-                .then((result) => {
-                    setIsAdmin(result.data.isAdmin);
-                    setIsAuthenticated(true);
-                })
-                .catch(() => {
-                    setIsAuthenticated(false);
-                    router.replace('/auth');
-                });
-        } else {
-            setIsAuthenticated(false);
-            router.replace('/auth');
-        }
+        apiInstance
+            .get('/users/me')
+            .then((result) => {
+                setIsAdmin(result.data.isAdmin);
+                setIsAuthenticated(true);
+            })
+            .catch(() => {
+                setIsAuthenticated(false);
+                router.replace('/auth');
+            });
     }, [router]);
 
     useEffect(() => {
