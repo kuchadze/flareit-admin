@@ -10,13 +10,6 @@
     background-color: $PrimaryBlackTone3;
     gap: 8px;
     flex-direction: column;
-    max-height: 400px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.searchInputContainer::-webkit-scrollbar {
-    display: none;
 }
 
 .inputContainer {
@@ -52,6 +45,13 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.dataContainer::-webkit-scrollbar {
+    display: none;
 }
 
 .searchAndMap {
