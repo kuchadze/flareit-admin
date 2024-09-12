@@ -27,9 +27,12 @@ const SearchItemAlbum = (props: Props) => {
             />
             <div className={styles.textContainer}>
                 <span className={styles.searchAndMapText}>{props.title}</span>
-                <span className={styles.searchAndMapText2}>
-                    {props.artistName}
-                </span>
+                <div>
+                    <span className={styles.searchAndMapText2}>
+                        {props.artistName}
+                    </span>
+                    <span className={styles.type}>~Album</span>
+                </div>
             </div>
         </Link>
     );

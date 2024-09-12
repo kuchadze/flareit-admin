@@ -24,7 +24,12 @@ const SearchItemAuthor = (props: Props) => {
                 height={24}
                 alt="Icon"
             />
-            <span className={styles.searchAndMapText}>{props.artistName}</span>
+            <div>
+                <span className={styles.searchAndMapText}>
+                    {props.artistName}
+                </span>
+                <span className={styles.type}>~Artist</span>
+            </div>
         </Link>
     );
 };
