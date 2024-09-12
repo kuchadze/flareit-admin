@@ -15,8 +15,10 @@ const BlockIcon = (props: Props) => {
                 if (isBlocked) {
                     await apiInstance.patch(`/users/${props.id}/unblock`, {}),
                         [];
+                    alert('unlocked');
                 } else {
                     await apiInstance.patch(`/users/${props.id}/block`, {}), [];
+                    alert('was blocked');
                 }
                 setIsBlocked((prev) => !prev);
             } catch (error) {

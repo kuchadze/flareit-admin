@@ -31,6 +31,7 @@ const MusicCard = (props: Props) => {
                     },
                 },
             );
+            alert('Playlist Deleted successfully');
             setIsDeleted(true);
         } catch (error) {
             console.log(error);

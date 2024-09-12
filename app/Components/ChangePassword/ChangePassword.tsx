@@ -45,6 +45,7 @@ const ChangePassword = forwardRef<
                         },
                     },
                 );
+                alert('Password changed successfully');
                 onSubmitStatus(true);
             } catch (error) {
                 setFormError('Error updating password');

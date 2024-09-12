@@ -45,6 +45,7 @@ const PlaylistsTable = () => {
             setPlaylists((prevPlaylists) =>
                 prevPlaylists.filter((playlist) => playlist.id !== playlistId),
             );
+            alert('Playlist Deleted successfully');
         } catch (error) {
             console.error('Error deleting playlist:', error);
             alert('Error deleting playlist');

@@ -46,6 +46,7 @@ const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
                         },
                     },
                 );
+                alert('Artist added successfully');
             } catch (error) {
                 alert('Error uploading data');
             }

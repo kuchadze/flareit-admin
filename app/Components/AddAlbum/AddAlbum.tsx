@@ -50,7 +50,7 @@ const AddAlbum = forwardRef<{ submitForm: () => void }, AddAlbumProps>(
                         },
                     },
                 );
-
+                alert('Album added successfully');
                 if (onDone) {
                     onDone();
                 }
