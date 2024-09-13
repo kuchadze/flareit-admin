@@ -1,16 +1,14 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Modal from '../Modal/Modal';
 import EditPlaylist from '../EditPlaylist/EditPlaylist';
 import styles from './EditIcon.module.scss';
-import { clickState } from '@/app/state';
-import { useRecoilState } from 'recoil';
 interface Props {
     id: number;
     value: string;
 }
 
 const EditIcon = (props: Props) => {
-    const [click, setClick] = useRecoilState(clickState);
+    const [click, setClick] = useState(false);
     const EditRef = useRef<{ submitForm: () => void }>(null);
 
     const handleModalDone = () => {
