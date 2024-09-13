@@ -9,6 +9,8 @@ import DeleteBox from '../DeleteBox/DeleteBox';
 import { useParams } from 'next/navigation';
 import EditIcon from '../EditIcon/EditIcon';
 import apiInstance from '@/app/ApiInstance';
+import { useRecoilValue } from 'recoil';
+import { clickState } from '@/app/state';
 
 interface Playlist {
     id: number;
@@ -19,12 +21,15 @@ interface Playlist {
 const PlaylistsTable = () => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
+    const click = useRecoilValue(clickState); // Corrected usage of `useRecoilValue`
 
     const params = useParams();
-    const id = params.id;
+    const id = params?.id; // Handle possible undefined `id`
 
     useEffect(() => {
         const fetchPlaylists = async () => {
+            if (!id) return; // Ensure id is present before fetching
+
             try {
                 const response = await apiInstance.get(`/users/${id}`);
                 setPlaylists(response.data.playlists);
@@ -34,10 +39,8 @@ const PlaylistsTable = () => {
             }
         };
 
-        if (id) {
-            fetchPlaylists();
-        }
-    }, []);
+        fetchPlaylists();
+    }, [id, click]); // Correctly re-fetch on id or click changes
 
     const handleDelete = async (playlistId: number) => {
         try {
@@ -45,12 +48,11 @@ const PlaylistsTable = () => {
             setPlaylists((prevPlaylists) =>
                 prevPlaylists.filter((playlist) => playlist.id !== playlistId),
             );
-            alert('Playlist Deleted successfully');
         } catch (error) {
             console.error('Error deleting playlist:', error);
             alert('Error deleting playlist');
         } finally {
-            setShowModal(null);
+            setShowModal(null); // Close modal after deletion
         }
     };
 

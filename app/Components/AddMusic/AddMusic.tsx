@@ -5,6 +5,8 @@ import axios from 'axios';
 import Input from '../Input/Input';
 import styles from './AddMusic.module.scss';
 import { useParams } from 'next/navigation';
+import { useRecoilState } from 'recoil';
+import { clickState } from '@/app/state';
 
 interface AddMusicProps {
     onDone?: () => void;
@@ -22,6 +24,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
     ({ onDone }, ref) => {
         const [audioFileName, setAudioFileName] = useState('');
         const [coverImgFileName, setCoverImgFileName] = useState('');
+        const [click, setClick] = useRecoilState(clickState);
         const token = document.cookie
             .split('; ')
             .find((row) => row.startsWith('token='))
@@ -54,6 +57,7 @@ const AddMusic = forwardRef<{ submitForm: () => void }, AddMusicProps>(
                         },
                     },
                 );
+                setClick(!click);
                 alert('Music added successfully');
             } catch (error) {
                 alert('Error submitting form');

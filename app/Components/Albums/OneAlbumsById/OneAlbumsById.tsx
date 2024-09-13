@@ -7,6 +7,8 @@ import MusicCard from '../../MusicCard/MusicCard';
 import AddMusic from '../../AddMusic/AddMusic';
 import { useParams } from 'next/navigation';
 import apiInstance from '@/app/ApiInstance';
+import { useRecoilState } from 'recoil';
+import { clickState } from '@/app/state';
 
 interface Music {
     coverImgUrl: string;
@@ -29,6 +31,7 @@ const OneAlbumsById = () => {
     const addMusicRef = useRef<{ submitForm: () => void }>(null);
     const [musics, setMusics] = useState<Music[]>([]);
     const [album, setAlbum] = useState<Album | null>(null);
+    const [click] = useRecoilState(clickState);
 
     const handleModalDone = () => {
         if (addMusicRef.current) {
@@ -51,7 +54,7 @@ const OneAlbumsById = () => {
                     alert(error);
                 });
         }
-    }, [id, musics]);
+    }, [id, click]);
 
     if (!album) {
         return <p>Loading...</p>;

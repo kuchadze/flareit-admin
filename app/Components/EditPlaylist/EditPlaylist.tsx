@@ -1,7 +1,9 @@
 import styles from './EditPlaylist.module.scss';
 import { forwardRef, useImperativeHandle } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import axios from 'axios';
+import apiInstance from '@/app/ApiInstance';
+import { useRecoilState } from 'recoil';
+import { clickState } from '@/app/state';
 
 interface AddMusicProps {
     onDone?: () => void;
@@ -17,32 +19,21 @@ export interface FormValues {
 const EditPlaylist = forwardRef<{ submitForm: () => void }, AddMusicProps>(
     ({ onDone, id, value }, ref) => {
         const { handleSubmit, register } = useForm<FormValues>();
-        const token = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith('token='))
-            ?.split('=')[1];
+        const [click, setClick] = useRecoilState(clickState);
 
         const onRegister: SubmitHandler<FormValues> = async (values) => {
             if (!values.title.trim()) {
-                alert('Title cannot be empty');
                 return;
             }
 
             try {
-                await axios.patch(
-                    `https://enigma-wtuc.onrender.com/playlists/${id}`,
-                    { title: values.title },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    },
-                );
+                await apiInstance.patch(`/playlists/${id}`, {
+                    title: values.title,
+                });
             } catch (error) {
                 alert('Error updating playlist');
             }
-
+            setClick(!click);
             if (onDone && values.title.trim()) {
                 onDone();
             }
