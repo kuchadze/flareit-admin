@@ -66,11 +66,6 @@ const ArtistsTable = () => {
             key: 'releaseDate',
         },
         {
-            title: 'Songs',
-            dataIndex: 'musicsCount',
-            key: 'songs',
-        },
-        {
             title: 'Added Date',
             dataIndex: 'createdAt',
             key: 'addedDate',
