@@ -9,6 +9,7 @@ import { useParams } from 'next/navigation';
 import apiInstance from '@/app/ApiInstance';
 import { useRecoilState } from 'recoil';
 import { clickState } from '@/app/state';
+import Link from 'next/link';
 
 interface Music {
     coverImgUrl: string;
@@ -64,7 +65,15 @@ const OneAlbumsById = () => {
         <>
             <div className={styles.container}>
                 <div className={styles.albumCard}>
-                    <p className={styles.albumTitle}>Albums</p>
+                    <div className={styles.artisCont}>
+                        <Link href={'/albums'} className={styles.artist}>
+                            Albums
+                        </Link>
+                        <img src="/images/metia.svg" />
+                        {album && (
+                            <p className={styles.songs}>{album.artistName}</p>
+                        )}
+                    </div>
                     <img
                         src={album.coverImgUrl}
                         className={styles.imageCont}
