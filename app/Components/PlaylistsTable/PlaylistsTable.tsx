@@ -62,7 +62,7 @@ const PlaylistsTable = () => {
             width: '40%',
             render: (title: string, record: Playlist) => (
                 <PlaylistInfo
-                    image={record.imageSrc || '/images/playlistImage.png'}
+                    image={record.imageSrc || '/images/MusicLogo.svg'}
                     title={record.title}
                 />
             ),
