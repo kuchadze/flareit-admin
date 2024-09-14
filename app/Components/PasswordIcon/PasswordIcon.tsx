@@ -23,17 +23,16 @@ const PasswordIcon = (props: Props) => {
 
         if (!inputValuesFilled) {
             alert('Please fill in all required fields.');
-            return; // Prevent modal from closing
+            return;
         }
 
         if (!passwordLengthValid || !isFormValid) {
             alert(
                 'Please ensure all fields are valid and the password is at least 8 characters long',
             );
-            return; // Prevent modal from closing
+            return;
         }
 
-        // Close modal only if all conditions are met
         setModals(false);
         setValidationError(null);
     }, [inputValuesFilled, isFormValid, passwordLengthValid]);
@@ -83,7 +82,7 @@ const PasswordIcon = (props: Props) => {
                     ref={addMusicRef}
                     id={props.id}
                     onSubmitStatus={handleSubmitStatus}
-                    onPasswordLengthCheck={handlePasswordLengthCheck} // Corrected usage
+                    onPasswordLengthCheck={handlePasswordLengthCheck}
                     onInputChange={handleInputChange}
                 />
             </Modal>

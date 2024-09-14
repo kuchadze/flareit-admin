@@ -64,15 +64,14 @@ const ChangePassword = forwardRef<
             const confirmPassword = getValues('confirmPassword');
             const isPasswordLengthValid = password.length >= 8;
 
-            // Check if all required inputs have values
             const areInputsFilled =
                 password.trim() !== '' && confirmPassword.trim() !== '';
 
             onPasswordLengthCheck(isPasswordLengthValid);
             if (!result || !areInputsFilled) {
-                onSubmitStatus(false); // Updated to reflect form validation
+                onSubmitStatus(false);
             } else {
-                onSubmitStatus(true); // Ensure status is updated when inputs are valid
+                onSubmitStatus(true);
             }
             return result;
         },
@@ -96,7 +95,7 @@ const ChangePassword = forwardRef<
                             })}
                             type="password"
                             placeholder="New Password"
-                            onChange={onInputChange} // Added onChange handler
+                            onChange={onInputChange}
                         />
                         {errors.password && (
                             <p className={styles.error}>
@@ -118,7 +117,7 @@ const ChangePassword = forwardRef<
                             })}
                             type="password"
                             placeholder="Confirm New Password"
-                            onChange={onInputChange} // Added onChange handler
+                            onChange={onInputChange}
                         />
                         {errors.confirmPassword && (
                             <p className={styles.error}>
