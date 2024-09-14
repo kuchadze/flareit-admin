@@ -70,12 +70,6 @@ const PlaylistsTable = () => {
             ),
         },
         {
-            title: 'Songs',
-            dataIndex: 'songs',
-            key: 'songs',
-            render: (text: string) => text || 'No songs available',
-        },
-        {
             title: '',
             dataIndex: 'buttons',
             key: 'buttons',
