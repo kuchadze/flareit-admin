@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import Modal from '../Modal/Modal';
 import ChangePassword from '../ChangePassword/ChangePassword';
 import styles from './PasswordIcon.module.scss';
@@ -12,23 +12,31 @@ const PasswordIcon = (props: Props) => {
     const [isFormValid, setIsFormValid] = useState<boolean>(true);
     const [passwordLengthValid, setPasswordLengthValid] =
         useState<boolean>(true);
+    const [inputValuesFilled, setInputValuesFilled] = useState<boolean>(false);
     const [, setValidationError] = useState<string | null>(null);
     const addMusicRef = useRef<{ submitForm: () => void }>(null);
 
-    const handleModalDone = () => {
+    const handleModalDone = useCallback(() => {
         if (addMusicRef.current) {
             addMusicRef.current.submitForm();
+        }
+
+        if (!inputValuesFilled) {
+            alert('Please fill in all required fields.');
+            return; // Prevent modal from closing
         }
 
         if (!passwordLengthValid || !isFormValid) {
             alert(
                 'Please ensure all fields are valid and the password is at least 8 characters long',
             );
-        } else {
-            setModals(false);
-            setValidationError(null);
+            return; // Prevent modal from closing
         }
-    };
+
+        // Close modal only if all conditions are met
+        setModals(false);
+        setValidationError(null);
+    }, [inputValuesFilled, isFormValid, passwordLengthValid]);
 
     const handleSubmitStatus = (status: boolean) => {
         setIsFormValid(status);
@@ -36,6 +44,21 @@ const PasswordIcon = (props: Props) => {
 
     const handlePasswordLengthCheck = (isValid: boolean) => {
         setPasswordLengthValid(isValid);
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        const password = e.target.name === 'password' ? value : '';
+        const confirmPassword =
+            e.target.name === 'confirmPassword' ? value : '';
+
+        const areInputsFilled =
+            (password.trim() !== '' && confirmPassword.trim() !== '') ||
+            (password.trim() !== '' && e.target.name === 'password') ||
+            (confirmPassword.trim() !== '' &&
+                e.target.name === 'confirmPassword');
+
+        setInputValuesFilled(areInputsFilled);
     };
 
     return (
@@ -60,7 +83,8 @@ const PasswordIcon = (props: Props) => {
                     ref={addMusicRef}
                     id={props.id}
                     onSubmitStatus={handleSubmitStatus}
-                    onPasswordLengthCheck={handlePasswordLengthCheck}
+                    onPasswordLengthCheck={handlePasswordLengthCheck} // Corrected usage
+                    onInputChange={handleInputChange}
                 />
             </Modal>
         </>
