@@ -8,13 +8,16 @@ import ArtistsTable from '../ArtistsTable/ArtistsTable';
 
 const Artist = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const addArtistRef = useRef<{ submitForm: () => void }>(null);
+    const addArtistRef = useRef<{
+        submitForm: () => void;
+        isInputEmpty: () => boolean;
+    }>(null);
 
     const handleModalDone = () => {
-        if (addArtistRef.current) {
+        if (addArtistRef.current && !addArtistRef.current.isInputEmpty()) {
             addArtistRef.current.submitForm();
+            setIsModalOpen(false);
         }
-        setIsModalOpen(false);
     };
 
     return (
