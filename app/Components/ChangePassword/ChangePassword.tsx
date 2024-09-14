@@ -7,6 +7,7 @@ import { FormValues } from '@/app/interfaces/interface';
 interface ChangePasswordProps {
     onSubmitStatus: (status: boolean) => void;
     onPasswordLengthCheck: (isValid: boolean) => void;
+    onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     id?: number;
 }
 
@@ -16,7 +17,7 @@ const ChangePassword = forwardRef<
         submitForm: () => void;
     },
     ChangePasswordProps
->(({ onSubmitStatus, onPasswordLengthCheck, id }, ref) => {
+>(({ onSubmitStatus, onPasswordLengthCheck, onInputChange, id }, ref) => {
     const {
         handleSubmit,
         register,
@@ -60,9 +61,16 @@ const ChangePassword = forwardRef<
         submitForm: () => {
             const result = handleSubmit(onRegister)();
             const password = getValues('password');
+            const confirmPassword = getValues('confirmPassword');
             const isPasswordLengthValid = password.length >= 8;
+
+            const areInputsFilled =
+                password.trim() !== '' && confirmPassword.trim() !== '';
+
             onPasswordLengthCheck(isPasswordLengthValid);
-            if (!result) {
+            if (!result || !areInputsFilled) {
+                onSubmitStatus(false);
+            } else {
                 onSubmitStatus(true);
             }
             return result;
@@ -87,6 +95,7 @@ const ChangePassword = forwardRef<
                             })}
                             type="password"
                             placeholder="New Password"
+                            onChange={onInputChange}
                         />
                         {errors.password && (
                             <p className={styles.error}>
@@ -108,6 +117,7 @@ const ChangePassword = forwardRef<
                             })}
                             type="password"
                             placeholder="Confirm New Password"
+                            onChange={onInputChange}
                         />
                         {errors.confirmPassword && (
                             <p className={styles.error}>
