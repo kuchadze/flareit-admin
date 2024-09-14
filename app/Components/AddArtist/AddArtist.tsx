@@ -10,131 +10,133 @@ interface AddArtistProps {
 }
 
 // eslint-disable-next-line react/display-name
-const AddArtist = forwardRef<{ submitForm: () => void }, AddArtistProps>(
-    ({ onDone }, ref) => {
-        const [fileName, setFileName] = useState<string>('');
-        const {
-            handleSubmit,
-            register,
-            formState: { errors },
-            setValue,
-        } = useForm<FormValues>();
-        const token = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith('token='))
-            ?.split('=')[1];
+const AddArtist = forwardRef<
+    { submitForm: () => void; isInputEmpty: () => boolean },
+    AddArtistProps
+>(({ onDone }, ref) => {
+    const [fileName, setFileName] = useState<string>('');
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+        setValue,
+        watch,
+    } = useForm<FormValues>();
 
-        const onRegister: SubmitHandler<FormValues> = async (values) => {
-            const formData = new FormData();
-            formData.append('artistName', values.artistName);
-            formData.append('lastName', values.lastName);
-            formData.append('releaseDate', values.releaseDate.toString());
-            formData.append('biography', values.biography);
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
-            if (values.coverImgUrl) {
-                formData.append('picture', values.coverImgUrl);
-            }
+    const onRegister: SubmitHandler<FormValues> = async (values) => {
+        const formData = new FormData();
+        formData.append('artistName', values.artistName);
+        formData.append('lastName', values.lastName);
+        formData.append('releaseDate', values.releaseDate.toString());
+        formData.append('biography', values.biography);
 
-            try {
-                await axios.post(
-                    'https://enigma-wtuc.onrender.com/authors',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                            Authorization: `Bearer ${token}`,
-                        },
+        if (values.coverImgUrl) {
+            formData.append('picture', values.coverImgUrl);
+        }
+
+        try {
+            await axios.post(
+                'https://enigma-wtuc.onrender.com/authors',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`,
                     },
-                );
-                alert('Artist added successfully');
-            } catch (error) {
-                alert('Error uploading data');
-            }
+                },
+            );
+            alert('Artist added successfully');
+        } catch (error) {
+            alert('Error uploading data');
+        }
 
-            if (onDone) {
-                onDone();
-            }
-        };
+        if (onDone) {
+            onDone();
+        }
+    };
 
-        useImperativeHandle(ref, () => ({
-            submitForm: handleSubmit(onRegister),
-        }));
+    useImperativeHandle(ref, () => ({
+        submitForm: handleSubmit(onRegister),
+        isInputEmpty: () => {
+            const artistName = watch('artistName');
+            const releaseDate = watch('releaseDate');
+            const biography = watch('biography');
+            return !artistName || !releaseDate || !biography;
+        },
+    }));
 
-        const handleFileChange = (
-            event: React.ChangeEvent<HTMLInputElement>,
-        ) => {
-            const file = event.target.files?.[0] || null;
-            if (file) {
-                setFileName(file.name);
-                setValue('coverImgUrl', file);
-            } else {
-                setFileName('');
-                setValue('coverImgUrl', null);
-            }
-        };
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0] || null;
+        if (file) {
+            setFileName(file.name);
+            setValue('coverImgUrl', file);
+        } else {
+            setFileName('');
+            setValue('coverImgUrl', null);
+        }
+    };
 
-        return (
-            <div className={styles.central}>
-                <form className={styles.form}>
-                    <div className={styles.container}>
-                        <div className={styles.inputGroup}>
-                            <p className={styles.color}>Name</p>
-                            <Input
-                                register={register('artistName', {
-                                    required: true,
-                                    minLength: 1,
-                                })}
-                                placeholder="Artist Name"
-                            />
-                        </div>
-                    </div>
+    return (
+        <div className={styles.central}>
+            <form className={styles.form}>
+                <div className={styles.container}>
                     <div className={styles.inputGroup}>
-                        <p className={styles.color}>Year</p>
-                        <input
-                            className={styles.input}
-                            {...register('releaseDate', {
-                                required: true,
-                                minLength: 1,
-                            })}
-                            placeholder="Year"
-                            type="number"
-                        />
-                    </div>
-                    <div className={styles.inputGroup}>
-                        <p className={styles.color}>Biography</p>
+                        <p className={styles.color}>Name</p>
                         <Input
-                            register={register('biography', {
+                            register={register('artistName', {
                                 required: true,
                                 minLength: 1,
                             })}
-                            placeholder="Add Biography"
+                            placeholder="Artist Name"
                         />
-                        {errors.biography && (
-                            <p className={styles.error}>
-                                Biography is required
-                            </p>
-                        )}
                     </div>
-                    <div className={styles.fileInputWrapper}>
-                        <input
-                            id="fileInput"
-                            type="file"
-                            multiple={false}
-                            className={styles.fileInput}
-                            onChange={handleFileChange}
-                        />
-                        <label
-                            htmlFor="fileInput"
-                            className={styles.customButton}
-                        >
-                            <img src="/images/Image.svg" alt="Upload icon" />
-                            <p>{fileName || 'Upload artist photo'}</p>
-                        </label>
-                    </div>
-                </form>
-            </div>
-        );
-    },
-);
+                </div>
+                <div className={styles.inputGroup}>
+                    <p className={styles.color}>Year</p>
+                    <input
+                        className={styles.input}
+                        {...register('releaseDate', {
+                            required: true,
+                            minLength: 1,
+                        })}
+                        placeholder="Year"
+                        type="number"
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <p className={styles.color}>Biography</p>
+                    <Input
+                        register={register('biography', {
+                            required: true,
+                            minLength: 1,
+                        })}
+                        placeholder="Add Biography"
+                    />
+                    {errors.biography && (
+                        <p className={styles.error}>Biography is required</p>
+                    )}
+                </div>
+                <div className={styles.fileInputWrapper}>
+                    <input
+                        id="fileInput"
+                        type="file"
+                        multiple={false}
+                        className={styles.fileInput}
+                        onChange={handleFileChange}
+                    />
+                    <label htmlFor="fileInput" className={styles.customButton}>
+                        <img src="/images/Image.svg" alt="Upload icon" />
+                        <p>{fileName || 'Upload artist photo'}</p>
+                    </label>
+                </div>
+            </form>
+        </div>
+    );
+});
 
 export default AddArtist;

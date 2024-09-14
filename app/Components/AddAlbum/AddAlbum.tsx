@@ -19,119 +19,121 @@ export interface FormValues {
     releaseDate: string;
 }
 
-const AddAlbum = forwardRef<{ submitForm: () => void }, AddAlbumProps>(
-    ({ onDone, id }, ref) => {
-        const [fileName, setFileName] = useState<string>('');
-        const { handleSubmit, register, setValue } = useForm<FormValues>();
-        const token = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith('token='))
-            ?.split('=')[1];
+const AddAlbum = forwardRef<
+    { submitForm: () => void; isInputEmpty: () => boolean },
+    AddAlbumProps
+>(({ onDone, id }, ref) => {
+    const [fileName, setFileName] = useState<string>('');
+    const { handleSubmit, register, setValue, watch } = useForm<FormValues>();
+    const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1];
 
-        const onRegister: SubmitHandler<FormValues> = async (values) => {
-            const formData = new FormData();
-            formData.append('title', values.title);
-            formData.append('artistName', values.artistName);
-            formData.append('releaseDate', values.releaseDate);
-            formData.append('authorId', String(id));
+    const onRegister: SubmitHandler<FormValues> = async (values) => {
+        const formData = new FormData();
+        formData.append('title', values.title);
+        formData.append('artistName', values.artistName);
+        formData.append('releaseDate', values.releaseDate);
+        formData.append('authorId', String(id));
 
-            if (values.picture) {
-                formData.append('picture', values.picture);
-            }
+        if (values.picture) {
+            formData.append('picture', values.picture);
+        }
 
-            try {
-                await axios.post(
-                    'https://enigma-wtuc.onrender.com/albums',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                            Authorization: `Bearer ${token}`,
-                        },
+        try {
+            await axios.post(
+                'https://enigma-wtuc.onrender.com/albums',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`,
                     },
-                );
-                alert('Album added successfully');
-                if (onDone) {
-                    onDone();
-                }
-            } catch (error) {
-                console.log(error);
+                },
+            );
+            alert('Album added successfully');
+            if (onDone) {
+                onDone();
             }
-        };
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-        useImperativeHandle(ref, () => ({
-            submitForm: handleSubmit(onRegister),
-        }));
+    useImperativeHandle(ref, () => ({
+        submitForm: handleSubmit(onRegister),
+        isInputEmpty: () => {
+            const title = watch('title');
+            const artistName = watch('artistName');
+            const releaseDate = watch('releaseDate');
+            return !title || !artistName || !releaseDate;
+        },
+    }));
 
-        const handleFileChange = (
-            event: React.ChangeEvent<HTMLInputElement>,
-        ) => {
-            const file = event.target.files?.[0] || null;
-            if (file) {
-                setFileName(file.name);
-                setValue('picture', file);
-            } else {
-                setFileName('');
-                setValue('picture', null);
-            }
-        };
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0] || null;
+        if (file) {
+            setFileName(file.name);
+            setValue('picture', file);
+        } else {
+            setFileName('');
+            setValue('picture', null);
+        }
+    };
 
-        return (
-            <div className={styles.central}>
-                <form
-                    className={styles.form}
-                    onSubmit={handleSubmit(onRegister)}
-                >
-                    <div className={styles.container}>
-                        <div className={styles.inputGroup}>
-                            <p className={styles.color}>Album Name</p>
-                            <Input
-                                register={register('title', {
-                                    required: true,
-                                })}
-                                placeholder="Album Name"
-                            />
-                        </div>
-                        <div className={styles.inputGroup}>
-                            <p className={styles.color}>Artist Name</p>
-                            <Input
-                                register={register('artistName', {
-                                    required: true,
-                                })}
-                                placeholder="Artist Name"
-                            />
-                        </div>
-                    </div>
+    return (
+        <div className={styles.central}>
+            <form className={styles.form} onSubmit={handleSubmit(onRegister)}>
+                <div className={styles.container}>
                     <div className={styles.inputGroup}>
-                        <p className={styles.color}>Year</p>
-                        <input
-                            className={styles.input}
-                            {...register('releaseDate', {
+                        <p className={styles.color}>Album Name</p>
+                        <Input
+                            register={register('title', {
                                 required: true,
                             })}
-                            placeholder="Year"
-                            type="number"
+                            placeholder="Album Name"
                         />
                     </div>
-                    <div className={styles.fileInputWrapper}>
-                        <input
-                            id="albumPicture"
-                            type="file"
-                            className={styles.fileInput}
-                            onChange={handleFileChange}
+                    <div className={styles.inputGroup}>
+                        <p className={styles.color}>Artist Name</p>
+                        <Input
+                            register={register('artistName', {
+                                required: true,
+                            })}
+                            placeholder="Artist Name"
                         />
-                        <label
-                            htmlFor="albumPicture"
-                            className={styles.customButton}
-                        >
-                            <img src="/images/Image.svg" alt="Upload icon" />
-                            <p>{fileName || 'Upload album cover'}</p>
-                        </label>
                     </div>
-                </form>
-            </div>
-        );
-    },
-);
+                </div>
+                <div className={styles.inputGroup}>
+                    <p className={styles.color}>Year</p>
+                    <input
+                        className={styles.input}
+                        {...register('releaseDate', {
+                            required: true,
+                        })}
+                        placeholder="Year"
+                        type="number"
+                    />
+                </div>
+                <div className={styles.fileInputWrapper}>
+                    <input
+                        id="albumPicture"
+                        type="file"
+                        className={styles.fileInput}
+                        onChange={handleFileChange}
+                    />
+                    <label
+                        htmlFor="albumPicture"
+                        className={styles.customButton}
+                    >
+                        <img src="/images/Image.svg" alt="Upload icon" />
+                        <p>{fileName || 'Upload album cover'}</p>
+                    </label>
+                </div>
+            </form>
+        </div>
+    );
+});
 
 export default AddAlbum;

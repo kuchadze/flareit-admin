@@ -29,16 +29,19 @@ interface Album {
 
 const OneAlbumsById = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const addMusicRef = useRef<{ submitForm: () => void }>(null);
+    const addMusicRef = useRef<{
+        submitForm: () => void;
+        isInputEmpty: () => boolean;
+    }>(null);
     const [musics, setMusics] = useState<Music[]>([]);
     const [album, setAlbum] = useState<Album | null>(null);
     const [click] = useRecoilState(clickState);
 
     const handleModalDone = () => {
-        if (addMusicRef.current) {
+        if (addMusicRef.current && !addMusicRef.current.isInputEmpty()) {
             addMusicRef.current.submitForm();
+            setIsModalOpen(false);
         }
-        setIsModalOpen(false);
     };
 
     const { id } = useParams();
