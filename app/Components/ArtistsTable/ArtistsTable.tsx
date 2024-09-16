@@ -7,6 +7,8 @@ import { format } from 'date-fns';
 import DeleteBox from '../DeleteBox/DeleteBox';
 import AddAlbumIcon from '../AddAlbumIcon/AddAlbumIcon';
 import apiInstance from '@/app/ApiInstance';
+import { useRecoilValue } from 'recoil';
+import { clickState } from '@/app/state';
 
 interface Artist {
     coverImgUrl: string;
@@ -20,6 +22,7 @@ interface Artist {
 const ArtistsTable = () => {
     const [artists, setArtists] = useState<Artist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
+    const click = useRecoilValue(clickState);
 
     useEffect(() => {
         const fetchArtists = async () => {
@@ -32,7 +35,7 @@ const ArtistsTable = () => {
         };
 
         fetchArtists();
-    }, []);
+    }, [click]);
 
     const handleDelete = async (id: number) => {
         try {

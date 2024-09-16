@@ -4,6 +4,8 @@ import styles from './AddArtist.module.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
 import { FormValues } from '@/app/interfaces/interface';
+import { useRecoilState } from 'recoil';
+import { clickState } from '@/app/state';
 
 interface AddArtistProps {
     onDone?: () => void;
@@ -27,6 +29,7 @@ const AddArtist = forwardRef<
         .split('; ')
         .find((row) => row.startsWith('token='))
         ?.split('=')[1];
+    const [clikc, setClick] = useRecoilState(clickState);
 
     const onRegister: SubmitHandler<FormValues> = async (values) => {
         const formData = new FormData();
@@ -50,6 +53,7 @@ const AddArtist = forwardRef<
                     },
                 },
             );
+            setClick(!clikc);
             alert('Artist added successfully');
         } catch (error) {
             alert('Error uploading data');
