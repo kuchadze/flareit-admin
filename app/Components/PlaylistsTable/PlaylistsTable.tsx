@@ -21,14 +21,14 @@ interface Playlist {
 const PlaylistsTable = () => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [showModal, setShowModal] = useState<number | null>(null);
-    const click = useRecoilValue(clickState); // Corrected usage of `useRecoilValue`
+    const click = useRecoilValue(clickState);
 
     const params = useParams();
-    const id = params?.id; // Handle possible undefined `id`
+    const id = params?.id;
 
     useEffect(() => {
         const fetchPlaylists = async () => {
-            if (!id) return; // Ensure id is present before fetching
+            if (!id) return;
 
             try {
                 const response = await apiInstance.get(`/users/${id}`);
@@ -40,8 +40,7 @@ const PlaylistsTable = () => {
         };
 
         fetchPlaylists();
-    }, [id, click]); // Correctly re-fetch on id or click changes
-
+    }, [id, click]);
     const handleDelete = async (playlistId: number) => {
         try {
             await apiInstance.delete(`/playlists/${playlistId}`);
@@ -52,7 +51,7 @@ const PlaylistsTable = () => {
             console.error('Error deleting playlist:', error);
             alert('Error deleting playlist');
         } finally {
-            setShowModal(null); // Close modal after deletion
+            setShowModal(null);
         }
     };
 
